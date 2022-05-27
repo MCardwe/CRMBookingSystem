@@ -16,7 +16,7 @@ public class Booking {
     @Column(name = "host")
     private boolean host;
 
-    @Column(name = "setup-type")
+    @Column(name = "setup_type")
     private String setupType;
 
     @Column(name = "confidential")
