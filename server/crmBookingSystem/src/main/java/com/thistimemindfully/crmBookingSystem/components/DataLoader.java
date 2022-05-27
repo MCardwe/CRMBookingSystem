@@ -27,14 +27,20 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         //Setting up default admin user
-        User user1 = new User("maximillian.cardwell@gmail.com", "Max");
-        user1.setAdmin(true);
-        userRepository.save(user1);
+        User admin = new User("maximillian.cardwell@gmail.com", "Max");
+        admin.setAdmin(true);
+        userRepository.save(admin);
+
+        // Setting up test random user
+        User randomUser = new User("randomguy@gmail.com", "randomer");
+        userRepository.save(randomUser);
 
         //Setting up test booking
-        Booking booking1 = new Booking(user1, "26/05/22", false, "group space open floor", false);
+        Booking booking1 = new Booking(admin, "26/05/22", false, "group space open floor", false);
         bookingRepository.save(booking1);
 
+        Booking booking2 = new Booking(randomUser, "22/07/22", true, "one to one therapy space", true);
+        bookingRepository.save(booking2);
 
     }
 }
