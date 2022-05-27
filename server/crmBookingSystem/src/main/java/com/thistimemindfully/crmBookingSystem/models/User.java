@@ -1,6 +1,10 @@
 package com.thistimemindfully.crmBookingSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,11 +26,16 @@ public class User {
     @Column(name = "is_allowed_to_book")
     private boolean isAllowedToBook;
 
+    @JsonIgnoreProperties("user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Booking> bookings;
+
     public User(String email, String name) {
         this.email = email;
         this.name = name;
         this.isAdmin = false;
         this.isAllowedToBook = false;
+        this.bookings = new ArrayList<>();
     }
 
     public User() {
@@ -70,5 +79,13 @@ public class User {
 
     public void setAllowedToBook(boolean allowed) {
         isAllowedToBook = allowed;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
