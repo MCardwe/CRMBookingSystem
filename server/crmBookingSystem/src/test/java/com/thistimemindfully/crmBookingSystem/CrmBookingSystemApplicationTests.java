@@ -10,4 +10,9 @@ class CrmBookingSystemApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void canGetAllUsers(){
+		
+	}
+
 }
