@@ -1,5 +1,7 @@
 package com.thistimemindfully.crmBookingSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
@@ -25,12 +27,18 @@ public class Booking {
     @Column(name = "confirmed")
     private boolean confirmed;
 
-    public Booking(String date, boolean host, String setupType, boolean confidential) {
+    @JsonIgnoreProperties({"bookings"})
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    public Booking(User user, String date, boolean host, String setupType, boolean confidential) {
         this.date = date;
         this.host = host;
         this.setupType = setupType;
         this.confidential = confidential;
         this.confirmed = false;
+        this.user = user;
     }
 
     public Booking() {
@@ -82,5 +90,13 @@ public class Booking {
 
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
