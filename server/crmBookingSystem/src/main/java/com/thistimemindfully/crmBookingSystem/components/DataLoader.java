@@ -20,6 +20,7 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         User user1 = new User("maximillian.cardwell@gmail.com", "Max");
+        user1.setAdmin(true);
         userRepository.save(user1);
 
     }
