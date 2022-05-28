@@ -2,6 +2,8 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { postUser, updateUser } from './api_services/UserDataService';
 import { postBooking, updateBooking, deleteBooking } from './api_services/BookingDataService';
+import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogoutButton';
 
 function App() {
 
@@ -18,48 +20,11 @@ function App() {
 
 
 
-
-  //Test to see if the create user function works with database
-
-  const handleCLick = () => {
-    deleteBooking(3);
-
-    // updateBooking({
-    //     date: "20/10/00",
-    //     host: true,
-    //     setupType: "one to one therapy space",
-    //     confidential: true,
-    //     confirmed: false,
-    //     user: currentUser
-    //   }, 3);
-
-    // postBooking({
-    //   date: "20/10/00",
-    //   host: true,
-    //   setupType: "one to one therapy space",
-    //   confidential: true,
-    //   confirmed: true,
-    //   user: currentUser
-    // })
-
-    // updateUser({
-    //   email: "fakeemail@gmail.com",
-    //   name: "FAKENAME",
-    //   admin: false,
-    //   allowedToBook: true
-    // }, 3);
-    // postUser({
-    //   email: "fakeemail@gmail.com",
-    //   name: "fakename",
-    //   admin: false,
-    //   allowedToBook: true
-    // });
-  }
-
   return (
     <div className="App">
       <h2>Hello</h2>
-      <button onClick={handleCLick}>Click</button>
+      <LoginButton />
+      <LogoutButton />
     </div>
   );
 }
