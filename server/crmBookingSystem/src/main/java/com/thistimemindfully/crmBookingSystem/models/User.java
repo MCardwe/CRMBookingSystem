@@ -27,7 +27,7 @@ public class User {
     private boolean isAllowedToBook;
 
     @JsonIgnoreProperties("user")
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
     public User(String email, String name) {
