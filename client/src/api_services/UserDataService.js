@@ -8,12 +8,15 @@ export const postUser = (payload) => {
     return fetch(baseUserUrl, {
         method: "POST",
         body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" }
+        headers: { 
+            "Accept" : "application/json",
+            "Content-Type": "application/json" 
+        }
       }).then((res) => res.json());
 }
 
 export const updateUser = (payload, id) => {
-    return fetch(baseUserUrl + `${id}`, {
+    return fetch(baseUserUrl + `/${id}`, {
         method: "PUT",
         body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" }
