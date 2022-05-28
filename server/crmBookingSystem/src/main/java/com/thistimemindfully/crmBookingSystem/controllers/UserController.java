@@ -38,15 +38,9 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public ResponseEntity<User> createUser(@RequestBody User user){
-//        List<User> allUsers = userRepository.findAll();
-//
-//        for (User selectedUser: allUsers){
-//            if (user.getEmail() == selectedUser.getEmail()){
-//                return new ResponseEntity<>(selectedUser, HttpStatus.OK);
-//            }
-//        }
         userRepository.save(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        User newUser = userRepository.findUserByEmail(user.getEmail()).get(0);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/users/{id}")

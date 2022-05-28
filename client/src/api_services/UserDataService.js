@@ -4,6 +4,11 @@ export const getUsers = () => {
     return fetch(baseUserUrl).then(res => {return res.json()});
 };
 
+export const getUserByEmail = (email) => {
+    return fetch(baseUserUrl + `/?email=${email}`)
+        .then(res => res.json());
+}
+
 export const postUser = (payload) => {
     return fetch(baseUserUrl, {
         method: "POST",

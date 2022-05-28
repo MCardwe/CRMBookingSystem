@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { postUser, updateUser } from './api_services/UserDataService';
+import { getUserByEmail, postUser, updateUser } from './api_services/UserDataService';
 import { postBooking, updateBooking, deleteBooking } from './api_services/BookingDataService';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
@@ -16,12 +16,32 @@ function App() {
 
   // Initial fetch to set up current user
   useEffect(() => {
-    if (user){
-      
+
+    setTimeout(() => {
+      if (user){
+        getUserByEmail(user.email)
+          .then(data => {
+            console.log(data);
+            // writing function so if there is no data recieved, create a new user.
+            if (!data[0]){
+              postUser(createUserObject(user.email, user.name))
+              .then(newData => setCurrentUser(newData));
+            } else {
+              setCurrentUser(data);
+            }
+            
+          })
+      }
+    }, 1000)
+    
+  }, [user]);
+
+  const createUserObject = (userEmail, usersName) => {
+    return {
+      email: userEmail,
+      name: usersName
     }
-  }, []);
-
-
+  }
 
 
 
