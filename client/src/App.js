@@ -17,24 +17,25 @@ function App() {
   // Initial fetch to set up current user
   useEffect(() => {
 
-    setTimeout(() => {
       if (user){
         getUserByEmail(user.email)
           .then(data => {
             console.log(data);
+
             // writing function so if there is no data recieved, create a new user.
             if (!data[0]){
               postUser(createUserObject(user.email, user.name))
-              .then(newData => setCurrentUser(newData));
+              .then(newData => {
+                console.log(newData);
+                setCurrentUser(newData);
+              });
             } else {
               setCurrentUser(data);
             }
             
           })
       }
-    }, 1000)
-    
-  }, [user]);
+    }, [user]);
 
   const createUserObject = (userEmail, usersName) => {
     return {
