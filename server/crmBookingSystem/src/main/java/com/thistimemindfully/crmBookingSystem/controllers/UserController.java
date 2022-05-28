@@ -21,7 +21,12 @@ public class UserController {
     //Creating the custom routes
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam (name = "email", required = false) String email){
+
+        if (email != null){
+            return new ResponseEntity<>(userRepository.findUserByEmail(email), HttpStatus.OK);
+        }
+
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
@@ -33,6 +38,13 @@ public class UserController {
 
     @PostMapping(value = "/users")
     public ResponseEntity<User> createUser(@RequestBody User user){
+//        List<User> allUsers = userRepository.findAll();
+//
+//        for (User selectedUser: allUsers){
+//            if (user.getEmail() == selectedUser.getEmail()){
+//                return new ResponseEntity<>(selectedUser, HttpStatus.OK);
+//            }
+//        }
         userRepository.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
@@ -55,5 +67,4 @@ public class UserController {
         userRepository.deleteById(id);
         return new ResponseEntity(id, HttpStatus.OK);
     }
-
 }

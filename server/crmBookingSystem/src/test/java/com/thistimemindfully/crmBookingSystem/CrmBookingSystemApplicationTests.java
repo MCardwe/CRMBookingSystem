@@ -40,4 +40,9 @@ class CrmBookingSystemApplicationTests {
 		assertEquals(2, found.size());
 	}
 
+	@Test
+	public void canFindUserByEmail(){
+		List<User> found = userRepository.findUserByEmail("maximillian.cardwell@gmail.com");
+		assertEquals(1, found.size());
+	}
 }

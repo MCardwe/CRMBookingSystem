@@ -4,19 +4,24 @@ import { postUser, updateUser } from './api_services/UserDataService';
 import { postBooking, updateBooking, deleteBooking } from './api_services/BookingDataService';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
+import { useAuth0 } from '@auth0/auth0-react'
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
 
-  // Initial ferch to set up current user permissions
+  // Bringing in ability to access Auth0 user
+
+  const { user } = useAuth0();
+
+  // Initial fetch to set up current user
   useEffect(() => {
-    fetch("http://localhost:8080/users/1")
-    .then(res => { 
-      return res.json();
-    })
-    .then(data => setCurrentUser(data));
+    if (user){
+      
+    }
   }, []);
+
+
 
 
 
