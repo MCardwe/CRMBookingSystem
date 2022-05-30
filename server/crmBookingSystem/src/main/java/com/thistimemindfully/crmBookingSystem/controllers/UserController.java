@@ -38,6 +38,12 @@ public class UserController {
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
+    // Query to send back all users not yet approved to send booking requests
+    @GetMapping(value = "/users/pending")
+    public ResponseEntity<List<User>> getAllPendingUsers(){
+        return new ResponseEntity<>(userRepository.findByIsAllowedToBookIsFalse(), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/users")
     public ResponseEntity<User> createUser(@RequestBody User user){
         userRepository.save(user);
@@ -57,16 +63,21 @@ public class UserController {
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
+    // Query to give permission for user to send booking requests
+    @PutMapping(value = "users/{id}/approve")
+    public ResponseEntity<Optional<User>> givePermissionToUser(@PathVariable Long id){
+        return userRepository.findById(id).map(userToApprove -> {
+            userToApprove.setAllowedToBook(true);
+            userRepository.save(userToApprove);
+            return new ResponseEntity<>(Optional.of(userToApprove), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
+    }
+
     @DeleteMapping(value = "/users/{id}")
     public ResponseEntity<Optional<User>> deleteUser(@PathVariable Long id){
         return userRepository.findById(id).map(userToDelete -> {
             userRepository.deleteById(userToDelete.getId());
             return new ResponseEntity<>(Optional.of(userToDelete), HttpStatus.OK);
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping(value = "/users/pending")
-    public ResponseEntity<List<User>> getAllPendingUsers(){
-        return new ResponseEntity<>(userRepository.findByIsAllowedToBookIsFalse(), HttpStatus.OK);
     }
 }

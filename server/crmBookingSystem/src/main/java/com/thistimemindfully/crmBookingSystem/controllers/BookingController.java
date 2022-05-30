@@ -32,6 +32,13 @@ public class BookingController {
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
+    // Query to get all unconfirmed bookings
+    @GetMapping(value = "/bookings/pending")
+    public ResponseEntity<List<Booking>> getAllPendingBookings(){
+        return new ResponseEntity<>(bookingRepository.findAllByConfirmedIsFalse(), HttpStatus.OK);
+    }
+
+
     @PostMapping(value = "/bookings")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking){
         bookingRepository.save(booking);
@@ -49,7 +56,16 @@ public class BookingController {
             bookingRepository.save(bookingToUpdate);
             return new ResponseEntity<>(Optional.of(bookingToUpdate), HttpStatus.OK);
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
+    }
 
+    //Query to switch booking from unconfirmed to confirmed
+    @PutMapping(value = "bookings/{id}/confirm")
+    public ResponseEntity<Optional<Booking>> confirmBooking(@PathVariable Long id){
+        return bookingRepository.findById(id).map(bookingToConfirm -> {
+            bookingToConfirm.setConfirmed(true);
+            bookingRepository.save(bookingToConfirm);
+            return new ResponseEntity<>(Optional.of(bookingToConfirm), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping(value = "/bookings/{id}")
@@ -60,10 +76,5 @@ public class BookingController {
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
 
 
-    }
-
-    @GetMapping(value = "/bookings/pending")
-    public ResponseEntity<List<Booking>> getAllPendingBookings(){
-        return new ResponseEntity<>(bookingRepository.findAllByConfirmedIsFalse(), HttpStatus.OK);
     }
 }
