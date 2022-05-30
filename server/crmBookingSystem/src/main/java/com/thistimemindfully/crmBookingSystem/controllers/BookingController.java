@@ -39,22 +39,27 @@ public class BookingController {
     }
 
     @PutMapping(value = "/bookings/{id}")
-    public ResponseEntity<Booking> updateBooking(@RequestBody Booking booking, @PathVariable Long id){
-        Booking bookingToUpdate = bookingRepository.findById(id).get();
-        bookingToUpdate.setDate(booking.getDate());
-        bookingToUpdate.setHost(booking.isHost());
-        bookingToUpdate.setConfidential(booking.isConfidential());
-        bookingToUpdate.setConfirmed(booking.isConfirmed());
-        bookingToUpdate.setSetupType(booking.getSetupType());
-        bookingRepository.save(bookingToUpdate);
-        return new ResponseEntity<>(bookingToUpdate, HttpStatus.OK);
+    public ResponseEntity<Optional<Booking>> updateBooking(@RequestBody Booking booking, @PathVariable Long id){
+        return bookingRepository.findById(id).map(bookingToUpdate -> {
+            bookingToUpdate.setDate(booking.getDate());
+            bookingToUpdate.setHost(booking.isHost());
+            bookingToUpdate.setConfidential(booking.isConfidential());
+            bookingToUpdate.setConfirmed(booking.isConfirmed());
+            bookingToUpdate.setSetupType(booking.getSetupType());
+            bookingRepository.save(bookingToUpdate);
+            return new ResponseEntity<>(Optional.of(bookingToUpdate), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
+
     }
 
     @DeleteMapping(value = "/bookings/{id}")
-    public ResponseEntity<Booking> deleteBooking(@PathVariable Long id){
-        Booking bookingToDelete = bookingRepository.findById(id).get();
-        bookingRepository.deleteById(id);
-        return new ResponseEntity(bookingToDelete, HttpStatus.OK);
+    public ResponseEntity<Optional<Booking>> deleteBooking(@PathVariable Long id){
+        return bookingRepository.findById(id).map(bookingToDelete -> {
+            bookingRepository.deleteById(bookingToDelete.getId());
+            return new ResponseEntity<>(Optional.of(bookingToDelete), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
+
+
     }
 
     @GetMapping(value = "/bookings/pending")
