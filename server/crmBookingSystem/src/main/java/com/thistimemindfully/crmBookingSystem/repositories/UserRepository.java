@@ -12,4 +12,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //Creating custom query routes
 
     List<User> findUserByEmail(String email);
+
+    // Creating a query to find all pending users waiting to be given permission to see timeslots
+
+    List<User> findByIsAllowedToBookIsFalse();
 }

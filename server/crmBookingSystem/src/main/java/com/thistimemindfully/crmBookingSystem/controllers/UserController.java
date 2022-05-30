@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +32,10 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{id}")
-    public ResponseEntity<Booking> getUser(@PathVariable Long id){
-        Optional<User> foundUser = userRepository.findById(id);
-        return new ResponseEntity(foundUser, HttpStatus.OK);
+    public ResponseEntity<Optional<User>> getUser(@PathVariable Long id){
+        return userRepository.findById(id).map(foundUser -> {
+            return new ResponseEntity<>(Optional.of(foundUser), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = "/users")
@@ -44,21 +46,27 @@ public class UserController {
     }
 
     @PutMapping(value = "/users/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long id){
-        User userToUpdate = userRepository.findById(id).get();
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setName(user.getName());
-        userToUpdate.setAdmin(user.isAdmin());
-        userToUpdate.setAllowedToBook(user.isAllowedToBook());
-        userToUpdate.setBookings(user.getBookings());
-        userRepository.save(userToUpdate);
-        return new ResponseEntity<>(userToUpdate, HttpStatus.OK);
+    public ResponseEntity<Optional<User>> updateUser(@RequestBody User user, @PathVariable Long id){
+        return userRepository.findById(id).map(userToUpdate -> {
+            userToUpdate.setEmail(user.getEmail());
+            userToUpdate.setName(user.getName());
+            userToUpdate.setAdmin(user.isAdmin());
+            userToUpdate.setAllowedToBook(user.isAllowedToBook());
+            userRepository.save(userToUpdate);
+            return new ResponseEntity<>(Optional.of(userToUpdate), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<User> deleteUser(@PathVariable Long id){
-        User userToDelete = userRepository.findById(id).get();
-        userRepository.deleteById(id);
-        return new ResponseEntity(id, HttpStatus.OK);
+    public ResponseEntity<Optional<User>> deleteUser(@PathVariable Long id){
+        return userRepository.findById(id).map(userToDelete -> {
+            userRepository.deleteById(userToDelete.getId());
+            return new ResponseEntity<>(Optional.of(userToDelete), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping(value = "/users/pending")
+    public ResponseEntity<List<User>> getAllPendingUsers(){
+        return new ResponseEntity<>(userRepository.findByIsAllowedToBookIsFalse(), HttpStatus.OK);
     }
 }

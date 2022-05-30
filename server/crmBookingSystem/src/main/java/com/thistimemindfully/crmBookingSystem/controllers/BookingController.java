@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +26,10 @@ public class BookingController {
     }
 
     @GetMapping(value = "/bookings/{id}")
-    public ResponseEntity<Booking> getBookings(@PathVariable Long id){
-        Optional<Booking> foundBooking = bookingRepository.findById(id);
-        return new ResponseEntity(foundBooking, HttpStatus.OK);
+    public ResponseEntity<Optional<Booking>> getBookings(@PathVariable Long id){
+        return bookingRepository.findById(id).map(foundBooking -> {
+           return new ResponseEntity<>(Optional.of(foundBooking), HttpStatus.OK);
+        }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = "/bookings")
@@ -44,7 +46,6 @@ public class BookingController {
         bookingToUpdate.setConfidential(booking.isConfidential());
         bookingToUpdate.setConfirmed(booking.isConfirmed());
         bookingToUpdate.setSetupType(booking.getSetupType());
-        bookingToUpdate.setUser(booking.getUser());
         bookingRepository.save(bookingToUpdate);
         return new ResponseEntity<>(bookingToUpdate, HttpStatus.OK);
     }
@@ -54,5 +55,10 @@ public class BookingController {
         Booking bookingToDelete = bookingRepository.findById(id).get();
         bookingRepository.deleteById(id);
         return new ResponseEntity(bookingToDelete, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/bookings/pending")
+    public ResponseEntity<List<Booking>> getAllPendingBookings(){
+        return new ResponseEntity<>(bookingRepository.findAllByConfirmedIsFalse(), HttpStatus.OK);
     }
 }
