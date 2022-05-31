@@ -58,9 +58,9 @@ function App() {
       <Router>
         <NavBar currentUser={currentUser}/>
         <Routes>
-          <Route path='/' exact element={<HeroSection/>}/>
-          <Route path='/my_bookings' exact element={<MyBookings currentUser={currentUser}/>}/>
-          <Route path='/request_form' element={<NewRequest/>}/>
+          <Route path='/' exact element={<HeroSection currentUser={currentUser}/>}/>
+          <Route path='/my_bookings' exact element={<MyBookings user={currentUser}/>}/>
+          <Route path='/request_form' element={<NewRequest user={currentUser}/>}/>
             <Route 
               path='/pending_bookings'
                 element={

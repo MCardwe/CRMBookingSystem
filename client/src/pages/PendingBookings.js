@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom'
 
 function PendingBookings({ user }) {
 
-//   if (!user.admin){
-//       return <Navigate to='/' />
-//   }
+  if (!user){
+    return <div>Authenticating...</div>
+}
 
   return (
     <div>PendingBookings</div>

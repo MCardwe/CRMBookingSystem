@@ -1,0 +1,14 @@
+
+.booking-list-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.booking-item {
+    width: 60%;
+}
+
+.listed-booking-title {
+    margin-left: 3rem;
+}

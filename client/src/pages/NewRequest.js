@@ -1,8 +1,14 @@
 import React from 'react'
 
-function NewRequest() {
+function NewRequest({ user }) {
+
+    if (!user){
+        return <div>Loading...</div>
+    }
+
   return (
-    <div>NewRequest</div>
+    <>
+    </>
   )
 }
 

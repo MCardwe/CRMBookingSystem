@@ -1,13 +1,18 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BookingListItem from '../components/BookingListItem';
+import '../components/MyBooking.css';
 
-function MyBookings({ currentUser }) {
+function MyBookings({ user }) {
+
+    if (!user){
+        return <div>Loading...</div>
+    }
 
     
-    const bookingNodes = currentUser.bookings.map((booking, index) => {
+    const bookingNodes = user.bookings.map((booking, index) => {
         return <BookingListItem key={index} date={booking.date} timeSlot={booking.timeSlot} confirmed={booking.confirmed} host={booking.host} setupType={booking.setupType} />
-    })
+    });
 
 
   return (
@@ -18,7 +23,9 @@ function MyBookings({ currentUser }) {
         </h2>
         <hr></hr>
         <br></br>
-        {bookingNodes}
+        <div className='booking-list-container'>
+            {bookingNodes}
+        </div>
     </>
   )
 }

@@ -1,18 +1,31 @@
 
 .new-booking-card {
     display: flex;
-    height: 40vh;
+    height: 30vh;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
     font-size: 3rem;
-    margin-left: 16rem;
+    margin: 1rem;
+    /* margin-left: 16rem; */
 }
 
 .main-page-title {
     display: flex;
-    height: 50vh;
+    height: 10vh;
     font-size: 3rem;
     align-items: center;
     justify-content: center;
     margin-left: 5rem;
+}
+
+.hero-section {
+    margin-top: 18vh;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-page-cards {
+    display: flex;
+    justify-content: center;
 }

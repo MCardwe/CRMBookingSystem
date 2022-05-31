@@ -2,13 +2,15 @@ import React from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Button, Card } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { TiTick } from 'react-icons/ti'
+import { AiOutlineClose } from 'react-icons/ai';
 
-function BookingListItem({ date, timeSlot, confirmed, host, setupType }) {
+function BookingListItem({ date, timeSlot, confirmed, host, setupType, user = null }) {
 
 
 
   return (
-    <div>
+    <div className='booking-item'>
         
         <Card>
             <Card.Header>{date} - Time Slot: {timeSlot}</Card.Header>
@@ -21,7 +23,7 @@ function BookingListItem({ date, timeSlot, confirmed, host, setupType }) {
                 Confidential? - {confirmed ? 'Yes' : 'No'}
               </Card.Text>
               <Card.Text>
-                {confirmed ? 'Confirmed' : 'Pending Confirmation'}
+                Confirmed? - {confirmed ? <TiTick color='green'/> : <AiOutlineClose color='red'/>}
               </Card.Text>
             </Card.Body>
           </Card>
