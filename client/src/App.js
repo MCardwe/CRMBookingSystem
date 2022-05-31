@@ -59,7 +59,7 @@ function App() {
         <NavBar currentUser={currentUser}/>
         <Routes>
           <Route path='/' exact element={<HeroSection/>}/>
-          <Route path='/my_bookings' exact element={<MyBookings />}/>
+          <Route path='/my_bookings' exact element={<MyBookings currentUser={currentUser}/>}/>
           <Route path='/request_form' element={<NewRequest/>}/>
             <Route 
               path='/pending_bookings'
@@ -94,7 +94,6 @@ function App() {
                 }
             />
         </Routes>
-        <Footer />
       </Router>
     </>
   );

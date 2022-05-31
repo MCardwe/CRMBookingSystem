@@ -9,7 +9,7 @@ const LoginButton = () => {
 
   return (
     <div>
-       <Button variant="outline-dark" onClick={loginWithRedirect}>
+       <Button variant="dark" onClick={loginWithRedirect}>
             Log In
         </Button>
     </div>

@@ -27,7 +27,7 @@ const NavBar = ({currentUser}) => {
     if (!currentUser){
         return (
         <div className='header'>
-        <IconContext.Provider value={{color: '#060b26'}}>
+        <IconContext.Provider value={{color: '#080808'}}>
             <div className='navbar'>
                 <Link to="#" className="menu-bars">
                     <FaBars onClick={handleSidebarClick} />
@@ -50,13 +50,13 @@ const NavBar = ({currentUser}) => {
   return (
     <>
     <div className='header'>
-        <IconContext.Provider value={{color: '#060b26'}}>
+        <IconContext.Provider value={{color: '#080808'}}>
             <div className='navbar'>
                 <Link to="#" className="menu-bars">
                     <FaBars onClick={handleSidebarClick} />
                 </Link>
             </div>
-
+        </IconContext.Provider>
             <div className='title'>
                 <h1 className='page-title'>This Time Mindfully</h1>
             </div>
@@ -65,6 +65,7 @@ const NavBar = ({currentUser}) => {
                 {isAuthenticated ? <LogoutButton /> : <LoginButton />}
             </div>
 
+        <IconContext.Provider value={{color: '#fff'}}>
             <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
                 <ul className='nav-menu-items' onClick={handleSidebarClick}>
                     <li className='navbar-toggle'>
