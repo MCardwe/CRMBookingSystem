@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,6 +6,8 @@ import 'react-calendar/dist/Calendar.css';
 import './RequestForm.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllBookedDates } from '../api_services/BookingDataService';
+import { differenceInCalendarDays } from 'date-fns';
 
 function RequestForm() {
 
@@ -14,12 +16,43 @@ function RequestForm() {
     const [host, setHost] = useState(false);
     const [setupType, setSetupType] = useState(null);
     const [confidential, setConfidential] = useState(false);
+    const [disabledDates, setDisabledDates] = useState(null)
+    const [fetchFinished, setFetchFinished] = useState(false);
 
+    // Fetch to get dates that need to be disabled on the calendar
+    useEffect(() => {
+        getAllBookedDates()
+            .then(data => {
+                setDisabledDates(data)
+                setFetchFinished(true)
+            })
+    }, [])
+
+    // If the fetch hasnt finished then the calendar and form are not shown
+    if (!fetchFinished){
+        return <div>Loading...</div>
+    }
+
+    const isSameDay = (a, b) => {
+        return differenceInCalendarDays(a, b) === 0;
+      }
+
+    const tileDisabled = ({ date, view }) => {
+        // Disable tiles in month view only
+        if (view === 'month') {
+          // Check if a date React-Calendar wants to check is on the list of disabled dates
+          return disabledDates.find(dDate => isSameDay(dDate, date));
+        }
+      }
+
+    // function to reformat the date into a useable and saveble way
     const formatDate = (date) => {
         date = new Date();
         return date.toLocaleDateString();
     };
 
+
+    // Collection of handle functions to handle the form value submitions
     const handleTimeSlot = (event) => {
         setTimeSlot(event.target.value);
     }
@@ -36,6 +69,7 @@ function RequestForm() {
         setConfidential(!confidential);
     }
 
+    // Submit function to send all form data to the database
     const handleSubmit = (event) => {
         event.preventDefault();
 
