@@ -6,10 +6,10 @@ import 'react-calendar/dist/Calendar.css';
 import './RequestForm.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAllBookedDates } from '../api_services/BookingDataService';
-import { differenceInCalendarDays } from 'date-fns';
+import { getAllBookedDates, postBooking } from '../api_services/BookingDataService';
+import { differenceInCalendarDays, setDate } from 'date-fns'
 
-function RequestForm() {
+function RequestForm({ user }) {
 
     const [date, setdate] = useState(null);
     const [timeSlot, setTimeSlot] = useState(null);
@@ -33,21 +33,8 @@ function RequestForm() {
         return <div>Loading...</div>
     }
 
-    const isSameDay = (a, b) => {
-        return differenceInCalendarDays(a, b) === 0;
-      }
-
-    const tileDisabled = ({ date, view }) => {
-        // Disable tiles in month view only
-        if (view === 'month') {
-          // Check if a date React-Calendar wants to check is on the list of disabled dates
-          return disabledDates.find(dDate => isSameDay(dDate, date));
-        }
-      }
-
     // function to reformat the date into a useable and saveble way
     const formatDate = (date) => {
-        date = new Date();
         return date.toLocaleDateString();
     };
 
@@ -71,7 +58,7 @@ function RequestForm() {
 
     // Submit function to send all form data to the database
     const handleSubmit = (event) => {
-        event.preventDefault();
+        // event.preventDefault();
 
         if (!date) {
             toast.error('Please Select A Date.', {
@@ -87,12 +74,32 @@ function RequestForm() {
         }
         
         const newBookingObject = {
+            user: user,
             date: formatDate(date),
             timeSlot: timeSlot,
             host: host,
             setupType: setupType,
             confidential: confidential 
         };
+
+        // setDate(null);
+        // setTimeSlot(null);
+        // setHost(false);
+        // setSetupType(null);
+        // setConfidential(false);
+        
+        postBooking(newBookingObject).then(
+            toast.success('Request Sent!', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                }),
+        );
+        
         
     }
 
@@ -116,10 +123,15 @@ function RequestForm() {
                     onChange={setdate} 
                     value={date}
                     minDate={new Date()}
+                    tileDisabled={({date, view}) => //This disables the tiles for the days that have already been booked
+                    (view === 'month') && 
+                    disabledDates.some(disabledDate =>
+                      date.toLocaleDateString() === disabledDate
+                    )}
                     />
             </div>
             
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className="booking-form">
                 <Form.Group className="mb-3" controlId="formTimeSlot">
                     <Form.Label>Time Slot</Form.Label>
                     <Form.Select onChange={handleTimeSlot} id="timeSlot" required>
@@ -132,7 +144,7 @@ function RequestForm() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formHost">
-                    <Form.Check type="checkbox" id="host" value={host} onChange={handleHost}label="Host/Helmsman Needed?" required/>
+                    <Form.Check type="checkbox" id="host" value={host} onChange={handleHost}label="Host/Helmsman Needed?" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formSetupType">
@@ -146,7 +158,7 @@ function RequestForm() {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formConfidential">
-                    <Form.Check type="checkbox" id="confidential" value={confidential} onChange={handleConfidential}label="Is this a confidential booking?" required/>
+                    <Form.Check type="checkbox" id="confidential" value={confidential} onChange={handleConfidential}label="Is this a confidential booking?" />
                     <Form.Text className="text-muted">
                         Dont worry, I'll never release booking information. If you have any questions just call.
                     </Form.Text>
@@ -156,7 +168,20 @@ function RequestForm() {
                     Submit
                 </Button>
             </Form>
+
         </div>
+
+        <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                />
     </>
   )
 }
