@@ -37,10 +37,10 @@ public class DataLoader implements ApplicationRunner {
         userRepository.save(randomUser);
 
         //Setting up test booking
-        Booking booking1 = new Booking(admin, "26/05/2022", "8-12", false, "group space open floor", false);
+        Booking booking1 = new Booking(admin, "26/06/2022", "8-12", false, "Group space open floor", false);
         bookingRepository.save(booking1);
 
-        Booking booking2 = new Booking(randomUser, "22/07/2022", "1-5", true, "one to one therapy space", true);
+        Booking booking2 = new Booking(randomUser, "22/07/2022", "1-5", true, "One to one therapy space", true);
         bookingRepository.save(booking2);
 
     }

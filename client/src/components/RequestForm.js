@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import 'react-calendar/dist/Calendar.css';
 import './RequestForm.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function RequestForm() {
 
@@ -36,17 +38,44 @@ function RequestForm() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(
-            formatDate(date),
-            timeSlot,
-            host,
-            setupType,
-            confidential,
-        )
+
+        if (!date) {
+            toast.error('Please Select A Date.', {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
+            return 
+        }
+        
+        const newBookingObject = {
+            date: formatDate(date),
+            timeSlot: timeSlot,
+            host: host,
+            setupType: setupType,
+            confidential: confidential 
+        };
+        
     }
 
   return (
     <>
+        <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
+
         <div className='form-container'>
             <div className='calender-container'>
                 <Calendar 

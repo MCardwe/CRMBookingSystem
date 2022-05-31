@@ -28,3 +28,7 @@ export const deleteBooking = (id) => {
         method: "DELETE",
     })
 }
+
+export const getAllBookedDates = () => {
+    return fetch(baseBookingUrl + "booked_dates").then(res => {return res.json()});
+}

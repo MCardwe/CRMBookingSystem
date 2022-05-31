@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,16 @@ public class BookingController {
         return new ResponseEntity<>(bookingRepository.findAllByConfirmedIsFalse(), HttpStatus.OK);
     }
 
+    // Query to get all booked dates
+    @GetMapping(value = "/bookings/booked_dates")
+    public ResponseEntity<List<Booking>> getAllBookedDates(){
+        List<Booking> allBookings = bookingRepository.findAll();
+        ArrayList<String> bookedDates = new ArrayList<>();
+        for (Booking booking: allBookings) {
+            bookedDates.add(booking.getDate());
+        }
+        return new ResponseEntity(bookedDates, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/bookings")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking){
