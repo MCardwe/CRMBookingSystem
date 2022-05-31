@@ -15,6 +15,9 @@ public class Booking {
     @Column(name = "date")
     private String date;
 
+    @Column(name = "time_slot")
+    private String timeSlot;
+
     @Column(name = "host")
     private boolean host;
 
@@ -32,8 +35,9 @@ public class Booking {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Booking(User user, String date, boolean host, String setupType, boolean confidential) {
+    public Booking(User user, String date, String timeSlot, boolean host, String setupType, boolean confidential) {
         this.date = date;
+        this.timeSlot = timeSlot;
         this.host = host;
         this.setupType = setupType;
         this.confidential = confidential;
@@ -58,6 +62,14 @@ public class Booking {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTimeSlot() {
+        return timeSlot;
+    }
+
+    public void setTimeSlot(String timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
     public boolean isHost() {
