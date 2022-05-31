@@ -1,9 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { getUserByEmail, postUser, updateUser } from './api_services/UserDataService';
-import { postBooking, updateBooking, deleteBooking } from './api_services/BookingDataService';
-import LoginButton from './components/LoginButton';
-import LogoutButton from './components/LogoutButton';
 import { useAuth0 } from '@auth0/auth0-react'
 import NavBar from './components/NavBar';
 import HeroSection from './components/HeroSection';
@@ -13,9 +10,7 @@ import MyBookings from './pages/MyBookings';
 import NewRequest from './pages/NewRequest';
 import PendingBookings from './pages/PendingBookings';
 import AllBookings from './pages/AllBookings';
-import PendingUsers from './pages/PendingUsers';
 import AllUsers from './pages/AllUsers';
-import { UserContext } from './contexts/UserContext';
 import ProtectedRoutes from './protected_routes/ProtectedRoutes';
 
 function App() {

@@ -1,5 +1,5 @@
 .navbar {
-    background-color: #060b26;
+    background-color: #fff;
     height: 80px;
     display: flex;
     justify-content: start;
@@ -13,7 +13,7 @@
 }
 
 .nav-menu {
-    background-color: #060b26;
+    background-color: #fff;
     width: 250px;
     height: 100vh;
     display: flex;
@@ -40,7 +40,7 @@
 
 .nav-text a {
     text-decoration: none;
-    color: #f5f5f5;
+    color: #060b26;
     font-size: 18px;
     width: 95%;
     height: 100%;
@@ -59,7 +59,7 @@
 }
 
 .navbar-toggle {
-    background-color: #060b26;
+    background-color: #fff;
     width: 100%;
     height: 80px;
     display: flex;
@@ -69,4 +69,21 @@
 
 span {
     margin-left: 16px;
+}
+
+.header {
+    background-color: #fff;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.title {
+    color: #060b26;
+}
+
+.login {
+    margin-right: 2rem;
 }

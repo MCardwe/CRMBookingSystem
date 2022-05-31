@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginButton = () => {
 
@@ -7,9 +9,9 @@ const LoginButton = () => {
 
   return (
     <div>
-        <button onClick={loginWithRedirect}>
+       <Button variant="outline-dark" onClick={loginWithRedirect}>
             Log In
-        </button>
+        </Button>
     </div>
   )
 }

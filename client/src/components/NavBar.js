@@ -25,66 +25,81 @@ const NavBar = ({currentUser}) => {
     }
 
     if (!currentUser){
-        return (<IconContext.Provider value={{color: '#fff'}}>
+        return (
+        <div className='header'>
+        <IconContext.Provider value={{color: '#060b26'}}>
             <div className='navbar'>
                 <Link to="#" className="menu-bars">
                     <FaBars onClick={handleSidebarClick} />
                 </Link>
-                <h1></h1>
+            </div>
+
+            <div className='title'>
+                <h1 className='page-title'>This Time Mindfully</h1>
+            </div>
+
+            <div className='login'>
                 {isAuthenticated ? <LogoutButton /> : <LoginButton />}
             </div>
-            </IconContext.Provider>
+        </IconContext.Provider>
+        </div>
      
         )
     }
 
   return (
     <>
+    <div className='header'>
+        <IconContext.Provider value={{color: '#060b26'}}>
+            <div className='navbar'>
+                <Link to="#" className="menu-bars">
+                    <FaBars onClick={handleSidebarClick} />
+                </Link>
+            </div>
 
-    <IconContext.Provider value={{color: '#fff'}}>
-        <div className='navbar'>
-            <Link to="#" className="menu-bars">
-                <FaBars onClick={handleSidebarClick} />
-            </Link>
-            <h1></h1>
-            {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+            <div className='title'>
+                <h1 className='page-title'>This Time Mindfully</h1>
+            </div>
+
+            <div className='login'>
+                {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+            </div>
+
+            <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+                <ul className='nav-menu-items' onClick={handleSidebarClick}>
+                    <li className='navbar-toggle'>
+                        <Link to='#' className='menu-bars'>
+                            <AiOutlineClose />
+                        </Link>
+                    </li>
+
+
+                    {SidebarData.map((item, index) => {
+                        return (
+                            <li key={index} className={item.cName}>
+                                <Link to={item.path}>
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </Link>
+                            </li>
+                        )
+                    })}
+                    {currentUser.admin ? SidebarAdmin.map((item, index) => {
+                        return (
+                            <li key={index} className={item.cName}>
+                                <Link to={item.path}>
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </Link>
+                            </li>
+                        )
+                    }): null}
+                    
+
+                </ul>
+            </nav>
+            </IconContext.Provider>
         </div>
-
-
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-            <ul className='nav-menu-items' onClick={handleSidebarClick}>
-                <li className='navbar-toggle'>
-                    <Link to='#' className='menu-bars'>
-                        <AiOutlineClose />
-                    </Link>
-                </li>
-
-
-                {SidebarData.map((item, index) => {
-                    return (
-                        <li key={index} className={item.cName}>
-                            <Link to={item.path}>
-                                {item.icon}
-                                <span>{item.title}</span>
-                            </Link>
-                        </li>
-                    )
-                })}
-                {currentUser.admin ? SidebarAdmin.map((item, index) => {
-                    return (
-                        <li key={index} className={item.cName}>
-                            <Link to={item.path}>
-                                {item.icon}
-                                <span>{item.title}</span>
-                            </Link>
-                        </li>
-                    )
-                }): null}
-                
-
-            </ul>
-        </nav>
-        </IconContext.Provider>
     </>
   )
 }
