@@ -11,7 +11,8 @@ import NewRequest from './pages/NewRequest';
 import PendingBookings from './pages/PendingBookings';
 import AllBookings from './pages/AllBookings';
 import AllUsers from './pages/AllUsers';
-import ProtectedRoutes from './protected_routes/ProtectedRoutes';
+import ProtectedRoutesAdmin from './protected_routes/ProtectedRoutesAdmin';
+import ProtectedRoutesUser from './protected_routes/ProtectedRoutesUser';
 
 function App() {
 
@@ -59,38 +60,57 @@ function App() {
         <NavBar currentUser={currentUser}/>
         <Routes>
           <Route path='/' exact element={<HeroSection currentUser={currentUser}/>}/>
-          <Route path='/my_bookings' exact element={<MyBookings user={currentUser}/>}/>
-          <Route path='/request_form' element={<NewRequest user={currentUser}/>}/>
+          {/* <Route path='/my_bookings' exact element={<MyBookings user={currentUser}/>}/> */}
+
+          <Route 
+            path='/my_bookings' 
+              element={
+                  <ProtectedRoutesUser user={currentUser}>
+                    <MyBookings user={currentUser}/>
+                  </ProtectedRoutesUser>
+                }
+              />
+
+          <Route 
+            path='/request_form' 
+              element={
+                  <ProtectedRoutesUser user={currentUser}>
+                    <NewRequest user={currentUser} />
+                  </ProtectedRoutesUser>
+                }
+              />
+
+
             <Route 
               path='/pending_bookings'
                 element={
-                  <ProtectedRoutes user={currentUser}>
+                  <ProtectedRoutesAdmin user={currentUser}>
                     <PendingBookings />
-                  </ProtectedRoutes>
+                  </ProtectedRoutesAdmin>
                 }
             />
             <Route 
               path='/all_bookings'
                 element={
-                  <ProtectedRoutes user={currentUser}>
+                  <ProtectedRoutesAdmin user={currentUser}>
                     <AllBookings />
-                  </ProtectedRoutes>
+                  </ProtectedRoutesAdmin>
                 }
             />
             <Route 
               path='/pending_users'
                 element={
-                  <ProtectedRoutes user={currentUser}>
+                  <ProtectedRoutesAdmin user={currentUser}>
                     <PendingBookings />
-                  </ProtectedRoutes>
+                  </ProtectedRoutesAdmin>
                 }
             />
             <Route 
               path='/all_users'
                 element={
-                  <ProtectedRoutes user={currentUser}>
+                  <ProtectedRoutesAdmin user={currentUser}>
                     <AllUsers />
-                  </ProtectedRoutes>
+                  </ProtectedRoutesAdmin>
                 }
             />
         </Routes>

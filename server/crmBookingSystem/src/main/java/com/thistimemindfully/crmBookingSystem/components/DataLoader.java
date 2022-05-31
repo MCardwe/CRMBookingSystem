@@ -29,6 +29,7 @@ public class DataLoader implements ApplicationRunner {
         //Setting up default admin user
         User admin = new User("maximillian.cardwell@gmail.com", "Max");
         admin.setAdmin(true);
+        admin.setAllowedToBook(true);
         userRepository.save(admin);
 
         // Setting up test random user

@@ -2,7 +2,11 @@ import React, { useContext } from 'react'
 import { Navigate, Outlet, Routes, Route, Router } from 'react-router-dom';
 import { UserContext } from '../contexts/UserContext'
 
-const ProtectedRoutes = ({ user, children }) => {
+const ProtectedRoutesAdmin = ({ user, children }) => {
+
+    if (!user){
+            return <div>Authenticating...</div>
+        }
 
     if (!user.admin){
         return <Navigate to='/' />
@@ -11,4 +15,4 @@ const ProtectedRoutes = ({ user, children }) => {
     return children;
 };
 
-export default ProtectedRoutes;
+export default ProtectedRoutesAdmin;

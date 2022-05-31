@@ -8,12 +8,12 @@ function MyBookings({ user }) {
     if (!user){
         return <div>Loading...</div>
     }
-
     
     const bookingNodes = user.bookings.map((booking, index) => {
-        return <BookingListItem key={index} date={booking.date} timeSlot={booking.timeSlot} confirmed={booking.confirmed} host={booking.host} setupType={booking.setupType} />
+        return <BookingListItem key={index} date={booking.date} timeSlot={booking.timeSlot} confirmed={booking.confirmed} host={booking.host} setupType={booking.setupType} id={booking.id}/>
     });
 
+    
 
   return (
     <>

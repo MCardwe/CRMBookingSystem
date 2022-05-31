@@ -12,3 +12,8 @@
 .listed-booking-title {
     margin-left: 3rem;
 }
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}

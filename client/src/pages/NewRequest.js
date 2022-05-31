@@ -1,6 +1,9 @@
 import React from 'react'
+import RequestForm from '../components/RequestForm'
 
 function NewRequest({ user }) {
+
+
 
     if (!user){
         return <div>Loading...</div>
@@ -8,6 +11,9 @@ function NewRequest({ user }) {
 
   return (
     <>
+
+        <RequestForm user={user}/>
+
     </>
   )
 }
