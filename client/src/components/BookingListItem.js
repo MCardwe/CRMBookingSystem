@@ -24,6 +24,7 @@ function BookingListItem({ date, timeSlot, confirmed, host, setupType, id, user 
                 })
         ).catch()
     }
+    
 
   return (
     <div className='booking-item'>
@@ -31,7 +32,8 @@ function BookingListItem({ date, timeSlot, confirmed, host, setupType, id, user 
         <Card>
             <Card.Header>{date} - Time Slot: {timeSlot}</Card.Header>
             <Card.Body>
-              <Card.Title>{setupType}</Card.Title>
+              <Card.Title>Setup Type - {setupType}</Card.Title>
+              <hr></hr>
               <Card.Text>
                 Host present? - {host ? 'Yes' : 'No'}
               </Card.Text>
@@ -42,7 +44,7 @@ function BookingListItem({ date, timeSlot, confirmed, host, setupType, id, user 
                   <div>
                         Confirmed? - {confirmed ? <TiTick color='green'/> : <AiOutlineClose color='red'/>}
                 </div>
-                <Button className='cancel-button' variant="dark" onClick={handleClick}>Cancel</Button>
+                <Button className='cancel-button' variant="dark" onClick={handleClick}>Cancel Booking</Button>
                 
               </Card.Text>
             </Card.Body>
