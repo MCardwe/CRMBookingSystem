@@ -58,7 +58,7 @@ function RequestForm({ user }) {
 
     // Submit function to send all form data to the database
     const handleSubmit = (event) => {
-        // event.preventDefault();
+        event.preventDefault();
 
         if (!date) {
             toast.error('Please Select A Date.', {

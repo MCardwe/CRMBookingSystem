@@ -34,6 +34,7 @@ public class DataLoader implements ApplicationRunner {
 
         // Setting up test random user
         User randomUser = new User("randomguy@gmail.com", "randomer");
+        admin.setAllowedToBook(true);
         userRepository.save(randomUser);
 
         //Setting up test booking

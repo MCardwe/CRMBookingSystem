@@ -50,6 +50,12 @@ public class BookingController {
         return new ResponseEntity(bookedDates, HttpStatus.OK);
     }
 
+    // Query to get all the bookings for a certain user
+    @GetMapping(value = "/bookings/user/{id}")
+    public ResponseEntity<List<Booking>> getBookingsForUser(@PathVariable Long id){
+        return new ResponseEntity<>(bookingRepository.findAllByUserId(id), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/bookings")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking){
         bookingRepository.save(booking);

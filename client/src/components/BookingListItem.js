@@ -8,21 +8,21 @@ import { deleteBooking } from '../api_services/BookingDataService';
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
-function BookingListItem({ date, timeSlot, confirmed, host, setupType, id, user = null }) {
-
+function BookingListItem({ booking, fetchBookings, index}) {
 
     const handleClick = () => {
-        deleteBooking(id).then(
-            toast.success('Booking deleted', {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                })
-        ).catch()
+        deleteBooking(booking.id).then(
+        toast.success('Booking deleted', {
+            position: "bottom-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            }),
+            fetchBookings()
+        )
     }
     
 
@@ -30,19 +30,19 @@ function BookingListItem({ date, timeSlot, confirmed, host, setupType, id, user 
     <div className='booking-item'>
         
         <Card>
-            <Card.Header>{date} - Time Slot: {timeSlot}</Card.Header>
+            <Card.Header>{booking.date} - Time Slot: {booking.timeSlot}</Card.Header>
             <Card.Body>
-              <Card.Title>Setup Type - {setupType}</Card.Title>
+              <Card.Title>Setup Type - {booking.setupType}</Card.Title>
               <hr></hr>
               <Card.Text>
-                Host present? - {host ? 'Yes' : 'No'}
+                Host present? - {booking.host ? 'Yes' : 'No'}
               </Card.Text>
               <Card.Text>
-                Confidential? - {confirmed ? 'Yes' : 'No'}
+                Confidential? - {booking.confirmed ? 'Yes' : 'No'}
               </Card.Text>
               <Card.Text className='space-between'>
                   <div>
-                        Confirmed? - {confirmed ? <TiTick color='green'/> : <AiOutlineClose color='red'/>}
+                        Confirmed? - {booking.confirmed ? <TiTick color='green'/> : <AiOutlineClose color='red'/>}
                 </div>
                 <Button className='cancel-button' variant="dark" onClick={handleClick}>Cancel Booking</Button>
                 

@@ -1,17 +1,53 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BookingListItem from '../components/BookingListItem';
 import '../components/MyBooking.css';
+import { getBookingsForUser } from '../api_services/BookingDataService';
 
-function MyBookings({ user }) {
+function MyBookings({ currentUser }) {
 
-    if (!user){
-        return <div>Loading...</div>
-    }
+
+    const [userBookings, setUserBookings] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+
+        if (currentUser){
+            fetchBookings();
+        };
     
-    const bookingNodes = user.bookings.map((booking, index) => {
-        return <BookingListItem key={index} date={booking.date} timeSlot={booking.timeSlot} confirmed={booking.confirmed} host={booking.host} setupType={booking.setupType} id={booking.id}/>
+      }, [currentUser])
+
+      const fetchBookings = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            getBookingsForUser(currentUser.id)
+            .then(data => {
+              if (data) {
+                setUserBookings(data);
+                setIsLoading(false);
+              } else {
+                  setIsLoading(false);
+              }
+            });
+        }, [500])
+        
+    }
+
+    if (!userBookings){
+        return <h2>Loading...</h2>
+    }
+
+
+    const bookingNodes = userBookings.map((booking, index) => {
+        return <BookingListItem 
+            key={index}
+            booking={booking}
+            fetchBookings={fetchBookings}
+            index={index}
+            />
     });
+    
 
     
 
@@ -24,7 +60,8 @@ function MyBookings({ user }) {
         <hr></hr>
         <br></br>
         <div className='booking-list-container'>
-            {bookingNodes}
+            {isLoading ? <h2>Loading...</h2> : bookingNodes}
+            {/* {!isLoading && userBookings ? <h2>No bookings to see</h2>: null} */}
         </div>
     </>
   )

@@ -14,6 +14,7 @@ import AllUsers from './pages/AllUsers';
 import ProtectedRoutesAdmin from './protected_routes/ProtectedRoutesAdmin';
 import ProtectedRoutesUser from './protected_routes/ProtectedRoutesUser';
 
+
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
@@ -45,6 +46,7 @@ function App() {
       }
     }, [user]);
 
+ 
   const createUserObject = (userEmail, usersName) => {
     return {
       email: userEmail,
@@ -66,7 +68,7 @@ function App() {
             path='/my_bookings' 
               element={
                   <ProtectedRoutesUser user={currentUser}>
-                    <MyBookings user={currentUser}/>
+                  <MyBookings currentUser={currentUser}/>
                   </ProtectedRoutesUser>
                 }
               />
