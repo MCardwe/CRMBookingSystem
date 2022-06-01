@@ -10,4 +10,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     // Creating custom query function to find all bookings that have not yet been confirmed
 
     List<Booking> findAllByConfirmedIsFalse();
+    List<Booking> findAllByUserId(Long id);
 }

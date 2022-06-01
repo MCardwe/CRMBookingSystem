@@ -29,6 +29,10 @@ export const deleteBooking = (id) => {
     })
 }
 
+export const getBookingsForUser = (id) => {
+    return fetch(baseBookingUrl + `/user/${id}`).then(res => {return res.json()});
+} 
+
 export const getAllBookedDates = () => {
     return fetch(baseBookingUrl + "/booked_dates").then(res => {return res.json()});
 }
