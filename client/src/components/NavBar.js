@@ -10,7 +10,7 @@ import './NavBar.css';
 import { IconContext } from 'react-icons';
 
 
-const NavBar = ({currentUser, handleSidebarClick}) => {
+const NavBar = ({currentUser, handleSidebarClick }) => {
 
     const { isAuthenticated } = useAuth0();
     

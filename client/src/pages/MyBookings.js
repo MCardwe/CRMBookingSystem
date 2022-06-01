@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import BookingListItem from '../components/BookingListItem';
 import '../components/MyBooking.css';
 import { getBookingsForUser } from '../api_services/BookingDataService';
+import { css } from "@emotion/react";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function MyBookings({ currentUser }) {
 
@@ -33,8 +35,20 @@ function MyBookings({ currentUser }) {
     }, [500])
     }
 
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: black;
+        `;
+
     if (!userBookings){
-        return <h2>Loading...</h2>
+    return <div className='pulse-loader'>
+        <PulseLoader
+        css={override}
+        size={40}
+        color={"#080808"}
+        loading={isLoading} />
+    </div>
     }
 
 

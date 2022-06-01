@@ -48,7 +48,9 @@ const HeroSection = ({currentUser}) => {
         </div>
       </div>
     </div>
-    <UserMessage currentUser={currentUser}/>
+    <div className='message-alert-hero'>
+      <UserMessage currentUser={currentUser}/>
+      </div>
     </>
   )
 }

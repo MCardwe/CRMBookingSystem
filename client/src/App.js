@@ -13,13 +13,15 @@ import AllUsers from './pages/AllUsers';
 import ProtectedRoutesAdmin from './protected_routes/ProtectedRoutesAdmin';
 import ProtectedRoutesUser from './protected_routes/ProtectedRoutesUser';
 import SideBar from './components/SideBar';
+import { css } from "@emotion/react";
+import PulseLoader from "react-spinners/PulseLoader";
 
 
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
-  const [isPending, setIsPending] = useState(true);
+  const [isPending, setIsPending] = useState(null);
   const [sidebar, setSidebar] = useState(false);
 
   // Bringing in ability to access Auth0 user
@@ -42,6 +44,7 @@ function App() {
               });
             } else {
               setCurrentUser(data[0]);
+              setIsPending(false)
             }
             
           })
@@ -59,6 +62,10 @@ function App() {
   const handleSidebarClick = () => {
     setSidebar(!sidebar);
 }
+  
+  const handleIsPending = () => {
+    setIsPending(true);
+  }
 
   return (
     <>

@@ -7,7 +7,8 @@ import './RequestForm.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getAllBookedDates, postBooking } from '../api_services/BookingDataService';
-import { differenceInCalendarDays, setDate } from 'date-fns'
+import { css } from "@emotion/react";
+import PulseLoader from "react-spinners/PulseLoader";
 
 function RequestForm({ user }) {
 
@@ -17,20 +18,40 @@ function RequestForm({ user }) {
     const [setupType, setSetupType] = useState(null);
     const [confidential, setConfidential] = useState(false);
     const [disabledDates, setDisabledDates] = useState(null)
-    const [fetchFinished, setFetchFinished] = useState(false);
+    const [fetchLoading, setFetchLoading] = useState(true);
 
     // Fetch to get dates that need to be disabled on the calendar
     useEffect(() => {
-        getAllBookedDates()
-            .then(data => {
-                setDisabledDates(data)
-                setFetchFinished(true)
-            })
+        fetchAndSetDisabledDates();
     }, [])
 
+    const fetchAndSetDisabledDates = () => {
+        setFetchLoading(true);
+        setTimeout(() => {
+            getAllBookedDates()
+            .then(data => {
+                setDisabledDates(data)
+                setFetchLoading(false)
+            })
+        }, 250)
+            
+    }
+
     // If the fetch hasnt finished then the calendar and form are not shown
-    if (!fetchFinished){
-        return <div>Loading...</div>
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: black;
+        `;
+
+    if (!disabledDates){
+    return <div className='pulse-loader'>
+        <PulseLoader
+        css={override}
+        size={40}
+        color={"#080808"}
+        loading={fetchLoading} />
+    </div>
     }
 
     // function to reformat the date into a useable and saveble way
@@ -81,12 +102,6 @@ function RequestForm({ user }) {
             setupType: setupType,
             confidential: confidential 
         };
-
-        // setDate(null);
-        // setTimeSlot(null);
-        // setHost(false);
-        // setSetupType(null);
-        // setConfidential(false);
         
         postBooking(newBookingObject).then(
             toast.success('Request Sent!', {
@@ -100,7 +115,7 @@ function RequestForm({ user }) {
                 }),
         );
         
-        
+        fetchAndSetDisabledDates();
     }
 
   return (
@@ -135,7 +150,7 @@ function RequestForm({ user }) {
                 <Form.Group className="mb-3" controlId="formTimeSlot">
                     <Form.Label>Time Slot</Form.Label>
                     <Form.Select onChange={handleTimeSlot} id="timeSlot" required>
-                        <option defaultChecked>Select an option...</option>
+                        <option value="" selected disabled hidden>Select an option...</option>
                         <option value="8-12">8am - 12pm</option>
                         <option value="1-5">1pm - 5pm</option>
                         <option value="6-10">6pm - 10pm</option>
@@ -150,7 +165,7 @@ function RequestForm({ user }) {
                 <Form.Group className="mb-3" controlId="formSetupType">
                     <Form.Label>Setup Type</Form.Label>
                     <Form.Select onChange={handleSetupType} id="setupType" required>
-                        <option defaultChecked>Select an option...</option>
+                        <option value="" selected disabled hidden>Select an option...</option>
                         <option value="Group space open floor">Group space open floor</option>
                         <option value="Group space table and chairs">Group space table and chairs</option>
                         <option value="One to one therapy space">One to one therapy space</option>
