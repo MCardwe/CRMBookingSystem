@@ -10,7 +10,7 @@ const LoginButton = () => {
   return (
     <div>
        <Button variant="dark" onClick={loginWithRedirect}>
-            Log In
+            Sign in
         </Button>
     </div>
   )

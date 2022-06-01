@@ -11,7 +11,10 @@ function NewRequest({ user }) {
 
   return (
     <>
-
+        <h2 className='listed-booking-title'>
+            New Booking
+        </h2>
+        <hr></hr>
         <RequestForm user={user}/>
 
     </>

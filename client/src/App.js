@@ -4,7 +4,6 @@ import { getUserByEmail, postUser, updateUser } from './api_services/UserDataSer
 import { useAuth0 } from '@auth0/auth0-react'
 import NavBar from './components/NavBar';
 import HeroSection from './components/HeroSection';
-import Footer from './components/Footer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MyBookings from './pages/MyBookings';
 import NewRequest from './pages/NewRequest';
@@ -13,6 +12,7 @@ import AllBookings from './pages/AllBookings';
 import AllUsers from './pages/AllUsers';
 import ProtectedRoutesAdmin from './protected_routes/ProtectedRoutesAdmin';
 import ProtectedRoutesUser from './protected_routes/ProtectedRoutesUser';
+
 
 
 function App() {
@@ -62,7 +62,6 @@ function App() {
         <NavBar currentUser={currentUser}/>
         <Routes>
           <Route path='/' exact element={<HeroSection currentUser={currentUser}/>}/>
-          {/* <Route path='/my_bookings' exact element={<MyBookings user={currentUser}/>}/> */}
 
           <Route 
             path='/my_bookings' 

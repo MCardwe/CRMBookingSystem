@@ -3,17 +3,20 @@ import { Button, Card } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './HeroSection.css' 
 import { Link } from 'react-router-dom';
+import UserMessage from './UserMessage';
 
 const HeroSection = ({currentUser}) => {
 
 
     
   return (
+    <>
     <div className='hero-section'>
 
       <p className='main-page-title'>
         The therapy boat is ready for business! 
       </p>
+      
 
       <div className='main-page-cards'>
         <div className='new-booking-card'>
@@ -45,6 +48,8 @@ const HeroSection = ({currentUser}) => {
         </div>
       </div>
     </div>
+    <UserMessage currentUser={currentUser}/>
+    </>
   )
 }
 

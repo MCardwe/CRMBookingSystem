@@ -18,20 +18,19 @@ function MyBookings({ currentUser }) {
     
       }, [currentUser])
 
-      const fetchBookings = () => {
-        setIsLoading(true);
-        setTimeout(() => {
-            getBookingsForUser(currentUser.id)
-            .then(data => {
-              if (data) {
-                setUserBookings(data);
+    const fetchBookings = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+        getBookingsForUser(currentUser.id)
+        .then(data => {
+            if (data) {
+            setUserBookings(data);
+            setIsLoading(false);
+            } else {
                 setIsLoading(false);
-              } else {
-                  setIsLoading(false);
-              }
-            });
-        }, [500])
-        
+            }
+        });
+    }, [500])
     }
 
     if (!userBookings){
@@ -48,9 +47,6 @@ function MyBookings({ currentUser }) {
             />
     });
     
-
-    
-
   return (
     <>
 
@@ -61,7 +57,6 @@ function MyBookings({ currentUser }) {
         <br></br>
         <div className='booking-list-container'>
             {isLoading ? <h2>Loading...</h2> : bookingNodes}
-            {/* {!isLoading && userBookings ? <h2>No bookings to see</h2>: null} */}
         </div>
     </>
   )

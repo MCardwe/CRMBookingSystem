@@ -20,10 +20,6 @@ const NavBar = ({currentUser}) => {
         setSidebar(!sidebar);
     }
 
-    const handleClickNotLoggedIn = () => {
-        alert("Sign in for more options!")
-    }
-
     if (!currentUser){
         return (
         <div className='header'>

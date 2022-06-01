@@ -10,7 +10,7 @@ const LogoutButton = () => {
   return (
     <div>
         <Button variant="dark" onClick={logout}>
-            Log Out
+            Sign out
         </Button>
     </div>
   )
