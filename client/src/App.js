@@ -12,6 +12,7 @@ import AllBookings from './pages/AllBookings';
 import AllUsers from './pages/AllUsers';
 import ProtectedRoutesAdmin from './protected_routes/ProtectedRoutesAdmin';
 import ProtectedRoutesUser from './protected_routes/ProtectedRoutesUser';
+import SideBar from './components/SideBar';
 
 
 
@@ -19,6 +20,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [isPending, setIsPending] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
 
   // Bringing in ability to access Auth0 user
 
@@ -54,12 +56,14 @@ function App() {
     }
   }
 
-
+  const handleSidebarClick = () => {
+    setSidebar(!sidebar);
+}
 
   return (
     <>
       <Router>
-        <NavBar currentUser={currentUser}/>
+        <NavBar currentUser={currentUser} handleSidebarClick={handleSidebarClick}/>
         <Routes>
           <Route path='/' exact element={<HeroSection currentUser={currentUser}/>}/>
 
@@ -115,6 +119,7 @@ function App() {
                 }
             />
         </Routes>
+        <SideBar sidebar={sidebar} currentUser={currentUser} handleSidebarClick={handleSidebarClick}/>
       </Router>
     </>
   );
