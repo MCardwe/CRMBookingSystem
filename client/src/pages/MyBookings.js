@@ -35,7 +35,7 @@ function MyBookings({ currentUser }) {
     }
 
     if (!userBookings){
-        return <h2>Loading...</h2>
+        return <h2 className='booking-list-container'>Loading...</h2>
     }
 
 
