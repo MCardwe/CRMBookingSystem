@@ -8,10 +8,10 @@ import { deleteBooking } from '../api_services/BookingDataService';
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
-function BookingListItem({ booking, updateCurrentUserBookings, index}) {
+function BookingListItem({ booking, fetchBookings, index}) {
 
     const handleClick = () => {
-        deleteBooking(booking.id)
+        deleteBooking(booking.id).then(
         toast.success('Booking deleted', {
             position: "bottom-right",
             autoClose: 2000,
@@ -20,9 +20,9 @@ function BookingListItem({ booking, updateCurrentUserBookings, index}) {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            });
-            updateCurrentUserBookings(index);
-            // deleteBookingFromState(index);
+            }),
+            fetchBookings()
+        )
     }
     
 

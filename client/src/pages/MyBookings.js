@@ -13,7 +13,15 @@ function MyBookings({ currentUser }) {
     useEffect(() => {
 
         if (currentUser){
-          getBookingsForUser(currentUser.id)
+            fetchBookings();
+        };
+    
+      }, [currentUser])
+
+      const fetchBookings = () => {
+        setIsLoading(true);
+        setTimeout(() => {
+            getBookingsForUser(currentUser.id)
             .then(data => {
               if (data) {
                 setUserBookings(data);
@@ -22,25 +30,20 @@ function MyBookings({ currentUser }) {
                   setIsLoading(false);
               }
             });
-        };
-    
-      }, [currentUser])
-
+        }, [500])
+        
+    }
 
     if (!userBookings){
-        return <div>Loading...</div>
+        return <h2>Loading...</h2>
     }
 
-    const updateCurrentUserBookings = (bookingIndex) => {
-        userBookings.pop(bookingIndex);
-    }
-    
 
     const bookingNodes = userBookings.map((booking, index) => {
         return <BookingListItem 
             key={index}
             booking={booking}
-            updateCurrentUserBookings={updateCurrentUserBookings}
+            fetchBookings={fetchBookings}
             index={index}
             />
     });
