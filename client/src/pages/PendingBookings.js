@@ -3,6 +3,8 @@ import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
 import { deleteBooking, getAllPendingBookings, updateConfirmedBooking } from '../api_services/BookingDataService';
 import PendingBookingItem from '../components/PendingBookingItem';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function PendingBookings({ user }) {
 
@@ -33,11 +35,29 @@ function PendingBookings({ user }) {
     const confirmBooking = (id) => {
         updateConfirmedBooking(id);
         fetchPendingBookings();
+        toast.success('Booking Confirmed!', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
     const denyBooking = (id) => {
         deleteBooking(id);
         fetchPendingBookings();
+        toast.toast.error('Booking Rejected!', {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
     const override = css`
@@ -79,6 +99,18 @@ function PendingBookings({ user }) {
                                 </div>
                                 : bookingNodes}
         </div>
+
+        <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
     </>
   )
 }

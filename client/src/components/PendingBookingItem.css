@@ -11,9 +11,21 @@
     width: 10%;
 }
 
+.confirm-box *:hover {
+    background-color: #080808;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
 .reject-box {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 10%;
+}
+
+.reject-box *:hover {
+    background-color: #080808;
+    border-radius: 1rem;
+    cursor: pointer;
 }
