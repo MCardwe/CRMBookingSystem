@@ -24,7 +24,10 @@ export const updateBooking = (payload, id) => {
 }
 
 export const updateConfirmedBooking = (id) => {
-    return fetch(baseBookingUrl + `/${id}/confirm`).then((res) => res.json());
+    return fetch(baseBookingUrl + `/${id}/confirm`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" }
+    }).then((res) => res.json());
 }
 
 export const deleteBooking = (id) => {
