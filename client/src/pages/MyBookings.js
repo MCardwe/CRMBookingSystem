@@ -70,7 +70,14 @@ function MyBookings({ currentUser }) {
         <hr></hr>
         <br></br>
         <div className='booking-list-container'>
-            {isLoading ? <h2>Loading...</h2> : bookingNodes}
+            {isLoading ? <div className='pulse-loader'>
+                                <PulseLoader
+                                css={override}
+                                size={40}
+                                color={"#080808"}
+                                loading={isLoading} />
+                        </div> 
+                            :   bookingNodes}
         </div>
     </>
   )

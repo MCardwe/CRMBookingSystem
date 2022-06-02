@@ -4,6 +4,7 @@ import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
 import { getAllPendingBookings } from '../api_services/BookingDataService';
 import BookingListItem from '../components/BookingListItem';
+import PendingBookingItem from '../components/PendingBookingItem';
 
 function PendingBookings({ user }) {
 
@@ -49,17 +50,25 @@ function PendingBookings({ user }) {
 
 
     const bookingNodes = pendingBookings.map((booking, index) => {
-        return <BookingListItem key={index} booking={booking} />
+        return <PendingBookingItem key={index} booking={booking} />
     })
 
 
   return (
     <>
         <h2 className='listed-booking-title'>
-                Bookings to confirm
+                Pending Bookings
             </h2>
             <hr></hr>
             <br></br>
+        {isLoading ? <div className='pulse-loader'>
+                            <PulseLoader
+                            css={override}
+                            size={40}
+                            color={"#080808"}
+                            loading={isLoading} /> 
+                            </div>
+                            : bookingNodes}
     </>
   )
 }
