@@ -23,6 +23,10 @@ export const updateBooking = (payload, id) => {
     }).then((res) => res.json());
 }
 
+export const updateConfirmedBooking = (id) => {
+    return fetch(baseBookingUrl + `/${id}/confirm`).then((res) => res.json());
+}
+
 export const deleteBooking = (id) => {
     return fetch(baseBookingUrl + `/${id}`, {
         method: "DELETE",

@@ -1,0 +1,19 @@
+.pending-booking-item {
+    width: 60%;
+    margin-top: 2rem;
+    margin-right: 2rem;
+}
+
+.confirm-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}
+
+.reject-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+}

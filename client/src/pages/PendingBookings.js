@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
 import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
-import { getAllPendingBookings } from '../api_services/BookingDataService';
-import BookingListItem from '../components/BookingListItem';
+import { deleteBooking, getAllPendingBookings, updateConfirmedBooking } from '../api_services/BookingDataService';
 import PendingBookingItem from '../components/PendingBookingItem';
 
 function PendingBookings({ user }) {
@@ -32,6 +30,16 @@ function PendingBookings({ user }) {
         
     }
 
+    const confirmBooking = (id) => {
+        updateConfirmedBooking(id);
+        fetchPendingBookings();
+    }
+
+    const denyBooking = (id) => {
+        deleteBooking(id);
+        fetchPendingBookings();
+    }
+
     const override = css`
     display: block;
     margin: 0 auto;
@@ -50,25 +58,27 @@ function PendingBookings({ user }) {
 
 
     const bookingNodes = pendingBookings.map((booking, index) => {
-        return <PendingBookingItem key={index} booking={booking} />
+        return <PendingBookingItem key={index} booking={booking} confirmBooking={confirmBooking} denyBooking={denyBooking}/>
     })
 
 
   return (
     <>
         <h2 className='listed-booking-title'>
-                Pending Bookings
-            </h2>
-            <hr></hr>
-            <br></br>
-        {isLoading ? <div className='pulse-loader'>
-                            <PulseLoader
-                            css={override}
-                            size={40}
-                            color={"#080808"}
-                            loading={isLoading} /> 
-                            </div>
-                            : bookingNodes}
+            Bookings To Confirm or Reject
+        </h2>
+        <hr></hr>
+        <br></br>
+        <div className='booking-list-container'>
+            {isLoading ? <div className='pulse-loader'>
+                                <PulseLoader
+                                css={override}
+                                size={40}
+                                color={"#080808"}
+                                loading={isLoading} /> 
+                                </div>
+                                : bookingNodes}
+        </div>
     </>
   )
 }

@@ -6,7 +6,7 @@ import { TiTick } from 'react-icons/ti'
 import { AiOutlineClose } from 'react-icons/ai';
 import { deleteBooking } from '../api_services/BookingDataService';
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function BookingListItem({ booking, fetchBookings, index}) {
 
