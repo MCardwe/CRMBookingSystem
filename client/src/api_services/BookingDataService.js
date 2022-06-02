@@ -36,3 +36,7 @@ export const getBookingsForUser = (id) => {
 export const getAllBookedDates = () => {
     return fetch(baseBookingUrl + "/booked_dates").then(res => {return res.json()});
 }
+
+export const getAllPendingBookings = () => {
+    return fetch(baseBookingUrl + `/pending`).then(res => {return res.json()});
+}
