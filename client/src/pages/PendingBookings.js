@@ -21,7 +21,7 @@ function PendingBookings({ user }) {
             getAllPendingBookings().then(data => {
                 
                 if (data) {
-                    setPendingBookings(data);
+                    setPendingBookings(data.sort(orderByDate));
                     setIsLoading(false);
                 } else {
                     setIsLoading(false);
@@ -30,6 +30,10 @@ function PendingBookings({ user }) {
             })
         }, [250])
         
+    }
+
+    const orderByDate = (a, b) => {
+        return new Date(a.date) - new Date(b.date);
     }
 
     const confirmBooking = (id) => {
@@ -75,7 +79,6 @@ function PendingBookings({ user }) {
         loading={isLoading} />
     </div>
     }
-
 
     const bookingNodes = pendingBookings.map((booking, index) => {
         return <PendingBookingItem key={index} booking={booking} confirmBooking={confirmBooking} denyBooking={denyBooking}/>

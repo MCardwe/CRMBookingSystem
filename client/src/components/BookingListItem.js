@@ -24,13 +24,12 @@ function BookingListItem({ booking, fetchBookings, index}) {
             fetchBookings()
         )
     }
-    
 
   return (
     <div className='booking-item'>
         
         <Card>
-            <Card.Header>{booking.date} - Time Slot: {booking.timeSlot}</Card.Header>
+            <Card.Header>{booking.date.toLocaleDateString()} - Time Slot: {booking.timeSlot}</Card.Header>
             <Card.Body>
               <Card.Title>Setup Type - {booking.setupType}</Card.Title>
               <hr></hr>

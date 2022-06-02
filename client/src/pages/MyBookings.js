@@ -26,13 +26,17 @@ function MyBookings({ currentUser }) {
         getBookingsForUser(currentUser.id)
         .then(data => {
             if (data) {
-            setUserBookings(data);
+            setUserBookings(data.sort(orderByDate));
             setIsLoading(false);
             } else {
                 setIsLoading(false);
             }
         });
     }, [500])
+    }
+
+    const orderByDate = (a, b) => {
+        return new Date(a.date) - new Date(b.date);
     }
 
     const override = css`

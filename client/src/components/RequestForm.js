@@ -12,7 +12,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 function RequestForm({ user }) {
 
-    const [date, setdate] = useState(null);
+    const [date, setDate] = useState(null);
     const [timeSlot, setTimeSlot] = useState(null);
     const [host, setHost] = useState(false);
     const [setupType, setSetupType] = useState(null);
@@ -56,7 +56,7 @@ function RequestForm({ user }) {
 
     // function to reformat the date into a useable and saveble way
     const formatDate = (date) => {
-        return date.toLocaleDateString();
+        return date.toISOString();
     };
 
 
@@ -115,6 +115,8 @@ function RequestForm({ user }) {
                 }),
         );
         
+        setDate(null);
+
         fetchAndSetDisabledDates();
     }
 
@@ -135,13 +137,13 @@ function RequestForm({ user }) {
         <div className='form-container'>
             <div className='calender-container'>
                 <Calendar 
-                    onChange={setdate} 
+                    onChange={setDate} 
                     value={date}
                     minDate={new Date()}
                     tileDisabled={({date, view}) => //This disables the tiles for the days that have already been booked
                     (view === 'month') && 
                     disabledDates.some(disabledDate =>
-                      date.toLocaleDateString() === disabledDate
+                      date.getDate() === disabledDate.getDate()
                     )}
                     />
             </div>

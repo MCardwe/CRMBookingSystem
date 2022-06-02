@@ -27,3 +27,11 @@
     width: 100%;
     height: 100vh;
 }
+
+.no-bookings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+}

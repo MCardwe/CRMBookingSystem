@@ -25,7 +25,7 @@ function PendingBookingItem({ booking, confirmBooking, denyBooking }) {
             <Card>
                 <Card.Header>{booking.user.name}, {booking.user.email} </Card.Header>
                 <Card.Body>
-                <Card.Title>Date - {booking.date}- Time Slot: {booking.timeSlot}</Card.Title>
+                <Card.Title>Date - {booking.date.toLocaleDateString()}- Time Slot: {booking.timeSlot}</Card.Title>
                 <hr></hr>
                 <Card.Text>
                     Setup Type - {booking.setupType}
