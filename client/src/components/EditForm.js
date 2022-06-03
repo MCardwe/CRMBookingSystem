@@ -10,17 +10,19 @@ import { getAllBookedDates, postBooking } from '../api_services/BookingDataServi
 import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
 import { updateBooking } from '../api_services/BookingDataService';
-import { Link } from 'react-router-dom';
+import { Link, Route, Navigate } from 'react-router-dom';
+
 
 function EditForm({ booking }) {
 
-    const [date, setDate] = useState();
+    const [date, setDate] = useState(new Date(booking.date));
     const [timeSlot, setTimeSlot] = useState(booking.timeSlot);
     const [host, setHost] = useState(booking.host);
     const [setupType, setSetupType] = useState(booking.setupType);
     const [confidential, setConfidential] = useState(booking.confidential);
     const [disabledDates, setDisabledDates] = useState(null)
     const [fetchLoading, setFetchLoading] = useState(true);
+    const [redirect, setRedirect] = useState(false);
 
     // Fetch to get dates that need to be disabled on the calendar
     useEffect(() => {
@@ -115,6 +117,10 @@ function EditForm({ booking }) {
                 draggable: true,
                 progress: undefined,
                 }),
+
+            setTimeout(() => {
+                setRedirect(true)
+            }, [250])
         );
         
         setDate(null);
@@ -141,6 +147,7 @@ function EditForm({ booking }) {
                 <Calendar 
                     onChange={setDate} 
                     value={date}
+                    defaultValue={new Date(booking.date)}
                     minDate={new Date()}
                     tileDisabled={({date, view}) => //This disables the tiles for the days that have already been booked
                     (view === 'month') && 
@@ -183,9 +190,9 @@ function EditForm({ booking }) {
                     </Form.Text>
                 </Form.Group>
 
-                <Link to='/all_bookings'>
-                    <Button variant="dark" type="submit">Submit</Button>
-                </Link>
+                
+                <Button variant="dark" type="submit">Submit</Button>
+                
 
             </Form>
 
@@ -202,7 +209,10 @@ function EditForm({ booking }) {
                 draggable
                 pauseOnHover
                 />
+
+            {redirect ? <Navigate to='/all_bookings' /> : null}
     </>
   )
 }
+
 export default EditForm;
