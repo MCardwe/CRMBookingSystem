@@ -6,7 +6,7 @@ import AllBookingsListItem from '../components/AllBookingsListItem';
 import { Button } from 'react-bootstrap';
 import './AllBooking.css'
 
-function AllBookings({ currentUser }) {
+function AllBookings({ currentUser, handleBookingToEdit }) {
 
     const [allBookings, setAllBookings] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +39,36 @@ function AllBookings({ currentUser }) {
         return new Date(a.date) - new Date(b.date);
     }
 
+    const orderByUserId = (a, b) => {
+        if (a.user.id > b.user.id) {
+            return 1;
+        } else if (b.user.id > a.user.id) {
+            return -1;
+        }   else {
+            return 0;
+        }
+    }
+
+    const orderByConfirmed = (a, b) => {
+        return (a.confirmed === b.confirmed)? 0 : a? -1 : 1;
+    }
+
+
+    const sortBookingsByUser = () => {
+        const newOrder = [...allBookings];
+        setAllBookings(newOrder.sort(orderByUserId));
+    }
+
+    const sortByDate= () => {
+        const newOrder = [...allBookings];
+        setAllBookings(newOrder.sort(orderByDate));
+    }
+
+    const sortByConfirmed = () => {
+        const newOrder = [...allBookings];
+        setAllBookings(newOrder.sort(orderByConfirmed));
+    }
+
     const override = css`
     display: block;
     margin: 0 auto;
@@ -56,7 +86,7 @@ function AllBookings({ currentUser }) {
     }
 
     const bookingNodes = allBookings.map((booking, index) => {
-       return <AllBookingsListItem key={index} booking={booking} />
+       return <AllBookingsListItem key={index} booking={booking} handleBookingToEdit={handleBookingToEdit}/>
     })
 
   return (
@@ -69,9 +99,9 @@ function AllBookings({ currentUser }) {
                 <h4 className='sort-title'>Sort by:</h4>
             
                 <div>
-                    <Button variant='outline-dark' className='sort-button'>Users</Button>
-                    <Button variant='outline-dark' className='sort-button'>Confirmed</Button>
-                    <Button variant='outline-dark' className='sort-button'>Date</Button>
+                    <Button variant='outline-dark' className='sort-button' onClick={sortBookingsByUser}>Users</Button>
+                    <Button variant='outline-dark' className='sort-button' onClick={sortByConfirmed}>Confirmed</Button>
+                    <Button variant='outline-dark' className='sort-button' onClick={sortByDate}>Date</Button>
                 </div>
             </div>
         </div>

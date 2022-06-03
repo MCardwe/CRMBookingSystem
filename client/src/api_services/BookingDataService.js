@@ -47,6 +47,10 @@ export const deleteBooking = (id) => {
     })
 }
 
+export const getBooking = (id) => {
+    return fetch(baseBookingUrl + `/${id}`).then(res => {return res.json()});
+}
+
 export const getBookingsForUser = (id) => {
     return fetch(baseBookingUrl + `/user/${id}`).then(res => {return res.json()}).then(data => {return data.map((booking) => {
         return {

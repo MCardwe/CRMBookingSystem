@@ -19,11 +19,14 @@ import ProtectedRoutesUser from "./protected_routes/ProtectedRoutesUser";
 import SideBar from "./components/SideBar";
 import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
+import EditBooking from "./pages/EditBooking";
+import { getBooking } from "./api_services/BookingDataService";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isPending, setIsPending] = useState(null);
   const [sidebar, setSidebar] = useState(false);
+  const [bookingToEdit, setBookingToEdit] = useState(null)
 
   // Bringing in ability to access Auth0 user
 
@@ -61,6 +64,19 @@ function App() {
   const handleIsPending = () => {
     setIsPending(true);
   };
+
+  const handleBookingToEdit = (bookingId) => {
+      getBooking(bookingId).then(
+        data => {
+
+          console.log(data)
+          if (data){
+            setBookingToEdit(data)
+          }
+        }
+      )
+  }
+
 
   return (
     <>
@@ -106,7 +122,7 @@ function App() {
             path="/all_bookings"
             element={
               <ProtectedRoutesAdmin user={currentUser}>
-                <AllBookings currentUser={currentUser} />
+                <AllBookings currentUser={currentUser} handleBookingToEdit={handleBookingToEdit}/>
               </ProtectedRoutesAdmin>
             }
           />
@@ -123,6 +139,14 @@ function App() {
             element={
               <ProtectedRoutesAdmin user={currentUser}>
                 <AllUsers />
+              </ProtectedRoutesAdmin>
+            }
+          />
+          <Route
+            path='/edit_form'
+            element={
+              <ProtectedRoutesAdmin user={currentUser}>
+                <EditBooking booking={bookingToEdit} />
               </ProtectedRoutesAdmin>
             }
           />
