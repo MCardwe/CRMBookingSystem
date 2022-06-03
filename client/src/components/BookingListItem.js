@@ -64,4 +64,4 @@ function BookingListItem({ booking, fetchBookings, index}) {
   )
 }
 
-export default BookingListItem
+export default BookingListItem;

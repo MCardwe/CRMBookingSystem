@@ -1,7 +1,18 @@
 const baseBookingUrl = "http://localhost:8080/bookings";
 
 export const getBookings = () => {
-    return fetch(baseBookingUrl).then(res => {return res.json()});
+    return fetch(baseBookingUrl).then(res => {return res.json()}).then(data => {return data.map((booking) => {
+        return {
+            id: booking.id,
+            date: new Date(booking.date),
+            timeSlot: booking.timeSlot,
+            host: booking.host,
+            setupType: booking.setupType,
+            confidential: booking.confidential,
+            confirmed: booking.confirmed,
+            user: booking.user
+        }
+    })});
 };
 
 export const postBooking = (payload) => {

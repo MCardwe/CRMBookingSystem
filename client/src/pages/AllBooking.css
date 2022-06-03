@@ -1,0 +1,17 @@
+.all-booking-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.booking-sort {
+    display: flex;
+    margin-top: 2.5rem;
+    margin-right: 2rem;
+}
+.sort-title {
+    margin-right: 1rem;
+}
+
+.sort-button {
+    margin-right: .25rem;
+}
