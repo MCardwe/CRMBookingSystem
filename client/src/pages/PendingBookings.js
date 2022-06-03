@@ -53,7 +53,7 @@ function PendingBookings({ user }) {
     const denyBooking = (id) => {
         deleteBooking(id);
         fetchPendingBookings();
-        toast.toast.error('Booking Rejected!', {
+        toast.error('Booking Rejected!', {
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: false,

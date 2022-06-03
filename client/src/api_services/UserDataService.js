@@ -9,6 +9,10 @@ export const getUserByEmail = (email) => {
         .then(res => res.json());
 }
 
+export const getPendingUsers = () => {
+    return fetch(baseUserUrl + '/pending').then(res => {return res.json()});
+}
+
 export const postUser = (payload) => {
     return fetch(baseUserUrl, {
         method: "POST",
@@ -20,10 +24,23 @@ export const postUser = (payload) => {
       }).then((res) => res.json());
 }
 
+export const deleteUser = (id) => {
+    return fetch(baseUserUrl + `/${id}`, {
+        method: "DELETE",
+    })
+}
+
 export const updateUser = (payload, id) => {
     return fetch(baseUserUrl + `/${id}`, {
         method: "PUT",
         body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" }
     }).then((res) => res.json());
+}
+
+export const updateApprovedUser = (id) => {
+    return fetch(baseUserUrl + `/${id}/approve`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" }
+    }).then(res => {return res.json()});
 }

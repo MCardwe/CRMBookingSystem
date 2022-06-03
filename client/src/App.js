@@ -21,6 +21,7 @@ import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
 import EditBooking from "./pages/EditBooking";
 import { getBooking } from "./api_services/BookingDataService";
+import PendingUsers from "./pages/PendingUsers";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -40,7 +41,7 @@ function App() {
         if (!data[0]) {
           postUser(createUserObject(user.email, user.name)).then((newData) => {
             setIsPending(false);
-            setCurrentUser(newData[0]);
+            setCurrentUser(newData);
           });
         } else {
           setCurrentUser(data[0]);
@@ -131,7 +132,7 @@ function App() {
             path="/pending_users"
             element={
               <ProtectedRoutesAdmin user={currentUser}>
-                <PendingBookings />
+                <PendingUsers />
               </ProtectedRoutesAdmin>
             }
           />
