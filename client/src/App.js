@@ -66,6 +66,7 @@ function App() {
   };
 
   const handleBookingToEdit = (bookingId) => {
+    setBookingToEdit(null);
       getBooking(bookingId).then(
         data => {
 

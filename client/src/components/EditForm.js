@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getAllBookedDates, postBooking } from '../api_services/BookingDataService';
 import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
+import { updateBooking } from '../api_services/BookingDataService';
+import { Link } from 'react-router-dom';
 
 function EditForm({ booking }) {
 
@@ -103,8 +105,8 @@ function EditForm({ booking }) {
             confidential: confidential 
         };
         
-        postBooking(newBookingObject).then(
-            toast.success('Request Sent!', {
+        updateBooking(newBookingObject, booking.id).then(
+            toast.success('Booking Updated!', {
                 position: "bottom-right",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -152,7 +154,7 @@ function EditForm({ booking }) {
                 <Form.Group className="mb-3" controlId="formTimeSlot">
                     <Form.Label>Time Slot</Form.Label>
                     <Form.Select onChange={handleTimeSlot} id="timeSlot" required>
-                        <option value="" selected disabled hidden>Select an option...</option>
+                        <option value={timeSlot} selected>{timeSlot}</option>
                         <option value="8-12">8am - 12pm</option>
                         <option value="1-5">1pm - 5pm</option>
                         <option value="6-10">6pm - 10pm</option>
@@ -161,29 +163,30 @@ function EditForm({ booking }) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formHost">
-                    <Form.Check type="checkbox" id="host" value={host} onChange={handleHost}label="Host/Helmsman Needed?" />
+                    <Form.Check type="checkbox" id="host" value={host} checked={host} onChange={handleHost}label="Host/Helmsman Needed?" />
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formSetupType">
                     <Form.Label>Setup Type</Form.Label>
                     <Form.Select onChange={handleSetupType} id="setupType" required>
-                        <option value="" disabled hidden>Select an option...</option>
-                        <option value="Group space open floor" {"Group space open floor" == booking.setupType ? selected : null}>Group space open floor</option>
+                        <option value={setupType} selected>{setupType}</option>
+                        <option value="Group space open floor">Group space open floor</option>
                         <option value="Group space table and chairs">Group space table and chairs</option>
                         <option value="One to one therapy space">One to one therapy space</option>
                     </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formConfidential">
-                    <Form.Check type="checkbox" id="confidential" value={confidential} onChange={handleConfidential}label="Is this a confidential booking?" />
+                    <Form.Check type="checkbox" id="confidential" value={confidential} checked={confidential} onChange={handleConfidential}label="Is this a confidential booking?" />
                     <Form.Text className="text-muted">
                         Dont worry, I'll never release booking information. If you have any questions just call.
                     </Form.Text>
                 </Form.Group>
 
-                <Button variant="dark" type="submit">
-                    Submit
-                </Button>
+                <Link to='/all_bookings'>
+                    <Button variant="dark" type="submit">Submit</Button>
+                </Link>
+
             </Form>
 
         </div>
