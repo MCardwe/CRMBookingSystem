@@ -5,12 +5,15 @@ import '../components/MyBooking.css';
 import { getBookingsForUser } from '../api_services/BookingDataService';
 import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
+import { useLocation } from 'react-router-dom';
+import { Button } from 'bootstrap';
 
-function MyBookings({ currentUser }) {
-
+function UserBookings({ currentUser, handleBookingToEdit }) {
 
     const [userBookings, setUserBookings] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const state = useLocation();
 
     useEffect(() => {
 
@@ -22,8 +25,9 @@ function MyBookings({ currentUser }) {
 
     const fetchBookings = () => {
     setIsLoading(true);
+    // debugger
     setTimeout(() => {
-        getBookingsForUser(currentUser.id)
+        getBookingsForUser(state.state.id)
         .then(data => {
             if (data) {
             setUserBookings(data.sort(orderByDate));
@@ -55,7 +59,6 @@ function MyBookings({ currentUser }) {
     </div>
     }
 
-
     const bookingNodes = userBookings.map((booking, index) => {
         return <BookingListItem 
             key={index}
@@ -63,15 +66,16 @@ function MyBookings({ currentUser }) {
             fetchBookings={fetchBookings}
             index={index}
             currentUser={currentUser}
+            handleBookingToEdit={handleBookingToEdit}
             />
     });
     
   return (
     <>
-
         <h2 className='listed-booking-title'>
-            Your Bookings
+            {state.state.email}'s Bookings
         </h2>
+
         <hr></hr>
         <br></br>
         <div className='booking-list-container'>
@@ -86,6 +90,7 @@ function MyBookings({ currentUser }) {
         </div>
     </>
   )
+
 }
 
-export default MyBookings
+export default UserBookings;

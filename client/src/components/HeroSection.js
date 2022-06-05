@@ -12,7 +12,7 @@ const HeroSection = ({currentUser}) => {
   return (
     <>
     <div className='hero-section'>
-
+    
       <p className='main-page-title'>
         The therapy boat is ready for business! 
       </p>

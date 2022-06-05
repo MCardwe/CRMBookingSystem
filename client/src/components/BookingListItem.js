@@ -7,8 +7,10 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { deleteBooking } from '../api_services/BookingDataService';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
+import './BookingListItem.css';
 
-function BookingListItem({ booking, fetchBookings, index}) {
+function BookingListItem({ booking, fetchBookings, index, currentUser, handleBookingToEdit}) {
 
     const handleClick = () => {
         deleteBooking(booking.id).then(
@@ -23,6 +25,10 @@ function BookingListItem({ booking, fetchBookings, index}) {
             }),
             fetchBookings()
         )
+    }
+
+    const handleEditClick = () => {
+        handleBookingToEdit(booking.id);
     }
 
   return (
@@ -43,8 +49,11 @@ function BookingListItem({ booking, fetchBookings, index}) {
                   <div>
                         Confirmed? - {booking.confirmed ? <TiTick color='green'/> : <AiOutlineClose color='red'/>}
                 </div>
-                <Button className='cancel-button' variant="dark" onClick={handleClick}>Cancel Booking</Button>
-                
+
+                <div className='buttons'>
+                    <Button variant="dark" onClick={handleClick}>Cancel Booking</Button>
+                    {currentUser.admin ? <Link to='/edit_form'><Button variant='dark' onClick={handleEditClick}>Edit Booking</Button> </Link> : null}
+                </div>
               </Card.Text>
             </Card.Body>
           </Card>

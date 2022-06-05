@@ -22,6 +22,7 @@ import PulseLoader from "react-spinners/PulseLoader";
 import EditBooking from "./pages/EditBooking";
 import { getBooking } from "./api_services/BookingDataService";
 import PendingUsers from "./pages/PendingUsers";
+import UserBookings from "./pages/UserBookings";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -60,10 +61,6 @@ function App() {
 
   const handleSidebarClick = () => {
     setSidebar(!sidebar);
-  };
-
-  const handleIsPending = () => {
-    setIsPending(true);
   };
 
   const handleBookingToEdit = (bookingId) => {
@@ -140,7 +137,7 @@ function App() {
             path="/all_users"
             element={
               <ProtectedRoutesAdmin user={currentUser}>
-                <AllUsers />
+                <AllUsers currentUser={currentUser}/>
               </ProtectedRoutesAdmin>
             }
           />
@@ -149,6 +146,14 @@ function App() {
             element={
               <ProtectedRoutesAdmin user={currentUser}>
                 <EditBooking booking={bookingToEdit} />
+              </ProtectedRoutesAdmin>
+            }
+          />
+          <Route 
+            path="/user_bookings"
+            element={
+              <ProtectedRoutesAdmin user={currentUser}>
+                <UserBookings currentUser={currentUser} handleBookingToEdit={handleBookingToEdit}/>
               </ProtectedRoutesAdmin>
             }
           />
