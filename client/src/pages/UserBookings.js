@@ -12,6 +12,7 @@ function UserBookings({ currentUser, handleBookingToEdit }) {
 
     const [userBookings, setUserBookings] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     const state = useLocation();
 
@@ -19,13 +20,13 @@ function UserBookings({ currentUser, handleBookingToEdit }) {
 
         if (currentUser){
             fetchBookings();
+            setUser(state.state);
         };
     
       }, [currentUser])
 
     const fetchBookings = () => {
     setIsLoading(true);
-    // debugger
     setTimeout(() => {
         getBookingsForUser(state.state.id)
         .then(data => {
@@ -36,7 +37,7 @@ function UserBookings({ currentUser, handleBookingToEdit }) {
                 setIsLoading(false);
             }
         });
-    }, [500])
+    }, [500]);
     }
 
     const orderByDate = (a, b) => {
@@ -73,7 +74,7 @@ function UserBookings({ currentUser, handleBookingToEdit }) {
   return (
     <>
         <h2 className='listed-booking-title'>
-            {state.state.email}'s Bookings
+            {user.email}'s Bookings
         </h2>
 
         <hr></hr>
