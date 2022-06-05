@@ -35,6 +35,30 @@ function AllUsers({ currentUser }) {
         }, [250])
     }
 
+    const orderByApproved = (a, b) => {
+        return (a.allowedToBook === b.allowedToBook)? 0 : a? 1 : -1;
+    }
+
+    const orderByAmountOfBookings = (a, b) => {
+        if (b.bookings.length > a.bookings.length) {
+            return 1;
+        } else if (a.bookings.length > b.bookings.length) {
+            return -1;
+        }   else {
+            return 0;
+        }
+    }
+
+    const sortByApproved = () => {
+        const newOrder = [...allUsers];
+        setAllUsers(newOrder.sort(orderByApproved));
+    }
+
+    const sortByAmountOfBookings = () => {
+        const newOrder = [...allUsers];
+        setAllUsers(newOrder.sort(orderByAmountOfBookings));
+    }
+
     const override = css`
     display: block;
     margin: 0 auto;
@@ -65,8 +89,8 @@ function AllUsers({ currentUser }) {
                 <h4 className='sort-title'>Sort by:</h4>
             
                 <div>
-                    <Button variant='outline-dark' className='sort-button' >Approved</Button>
-                    <Button variant='outline-dark' className='sort-button' >Bookings</Button>
+                    <Button variant='outline-dark' className='sort-button' onClick={sortByApproved}>Approved</Button>
+                    <Button variant='outline-dark' className='sort-button' onClick={sortByAmountOfBookings}>Bookings</Button>
                 </div>
             </div>
         </div>
