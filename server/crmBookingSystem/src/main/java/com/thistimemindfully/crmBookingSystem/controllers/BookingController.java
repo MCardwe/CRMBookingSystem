@@ -70,6 +70,7 @@ public class BookingController {
             bookingToUpdate.setConfidential(booking.isConfidential());
             bookingToUpdate.setConfirmed(booking.isConfirmed());
             bookingToUpdate.setSetupType(booking.getSetupType());
+            bookingToUpdate.setTimeSlot(booking.getTimeSlot());
             bookingRepository.save(bookingToUpdate);
             return new ResponseEntity<>(Optional.of(bookingToUpdate), HttpStatus.OK);
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));

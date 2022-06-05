@@ -60,7 +60,8 @@ function EditForm({ booking }) {
 
     // function to reformat the date into a useable and saveble way
     const formatDate = (date) => {
-        return date.toISOString();
+        const newDate = new Date(date);
+        return newDate.toISOString();
     };
 
 
@@ -117,12 +118,13 @@ function EditForm({ booking }) {
                 draggable: true,
                 progress: undefined,
                 }),
-
-            setTimeout(() => {
-                setRedirect(true)
-            }, [250])
+            // setTimeout(() => {
+            //     setRedirect(true)
+            // }, [250])
         );
         
+        debugger
+
         setDate(null);
 
         fetchAndSetDisabledDates();
