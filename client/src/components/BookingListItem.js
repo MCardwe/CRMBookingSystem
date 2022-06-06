@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import './BookingListItem.css';
 
-function BookingListItem({ booking, fetchBookings, index, currentUser, handleBookingToEdit}) {
+function BookingListItem({ booking, fetchBookings, currentUser, handleBookingToEdit}) {
 
     const handleClick = () => {
         deleteBooking(booking.id).then(

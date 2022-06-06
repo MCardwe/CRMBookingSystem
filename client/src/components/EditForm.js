@@ -118,9 +118,9 @@ function EditForm({ booking }) {
                 draggable: true,
                 progress: undefined,
                 }),
-            // setTimeout(() => {
-            //     setRedirect(true)
-            // }, [250])
+            setTimeout(() => {
+                setRedirect(true)
+            }, [250])
         );
         
         debugger

@@ -6,7 +6,7 @@ import { getBookingsForUser } from '../api_services/BookingDataService';
 import { css } from "@emotion/react";
 import PulseLoader from "react-spinners/PulseLoader";
 
-function MyBookings({ currentUser }) {
+function MyBookings({ currentUser, handleBookingToEdit }) {
 
 
     const [userBookings, setUserBookings] = useState(null);
@@ -63,6 +63,7 @@ function MyBookings({ currentUser }) {
             fetchBookings={fetchBookings}
             index={index}
             currentUser={currentUser}
+            handleBookingToEdit={handleBookingToEdit}
             />
     });
     

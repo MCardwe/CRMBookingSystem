@@ -95,7 +95,7 @@ function App() {
             path="/my_bookings"
             element={
               <ProtectedRoutesUser user={currentUser}>
-                <MyBookings currentUser={currentUser} />
+                <MyBookings currentUser={currentUser} handleBookingToEdit={handleBookingToEdit}/>
               </ProtectedRoutesUser>
             }
           />
