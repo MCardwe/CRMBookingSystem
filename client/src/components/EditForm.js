@@ -122,8 +122,6 @@ function EditForm({ booking }) {
                 setRedirect(true)
             }, [250])
         );
-        
-        debugger
 
         setDate(null);
 

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './HeroSection.css' 
 import { Link } from 'react-router-dom';
 import UserMessage from './UserMessage';
+import image2 from'../static/image_2.png' ;
 
 const HeroSection = ({currentUser}) => {
 
@@ -14,7 +15,7 @@ const HeroSection = ({currentUser}) => {
     <div className='hero-section'>
     
       <p className='main-page-title'>
-        The therapy boat is ready for business! 
+        Booking made simple.
       </p>
       
 
@@ -47,7 +48,11 @@ const HeroSection = ({currentUser}) => {
           </Card>
         </div>
       </div>
+      {/* <img src={require('../static/image_2.png')} width={400} height={400}/> */}
     </div>
+    
+    
+
     <div className='message-alert-hero'>
       <UserMessage currentUser={currentUser}/>
       </div>

@@ -1,5 +1,6 @@
 package com.thistimemindfully.crmBookingSystem.controllers;
 
+import com.thistimemindfully.crmBookingSystem.esender.EmailService;
 import com.thistimemindfully.crmBookingSystem.models.Booking;
 import com.thistimemindfully.crmBookingSystem.models.User;
 import com.thistimemindfully.crmBookingSystem.repositories.BookingRepository;
@@ -19,6 +20,9 @@ public class BookingController {
     //Injecting repository
     @Autowired
     BookingRepository bookingRepository;
+
+    @Autowired
+    EmailService emailService;
 
     //Creating the custom routes
     @GetMapping(value = "/bookings")
@@ -59,6 +63,7 @@ public class BookingController {
     @PostMapping(value = "/bookings")
     public ResponseEntity<Booking> createBooking(@RequestBody Booking booking){
         bookingRepository.save(booking);
+        emailService.sendMessage("maximillian.cardwell@gmail.com", "New Booking Request", "There has been a booking request placed for " + booking.getDate() + " at " + booking.getTimeSlot() + " by " + booking.getUser().getEmail() + ". Please confirm or reject the booking via the booking service.");
         return new ResponseEntity<>(booking, HttpStatus.CREATED);
     }
 
@@ -82,6 +87,7 @@ public class BookingController {
         return bookingRepository.findById(id).map(bookingToConfirm -> {
             bookingToConfirm.setConfirmed(true);
             bookingRepository.save(bookingToConfirm);
+            emailService.sendMessage(bookingToConfirm.getUser().getEmail(), "Booking Confirmed!", "Hey! Your booking for the " + bookingToConfirm.getDate() + " at " + bookingToConfirm.getTimeSlot() + " has been confirmed! Thank you for using this service.");
             return new ResponseEntity<>(Optional.of(bookingToConfirm), HttpStatus.OK);
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }
@@ -90,6 +96,7 @@ public class BookingController {
     public ResponseEntity<Optional<Booking>> deleteBooking(@PathVariable Long id){
         return bookingRepository.findById(id).map(bookingToDelete -> {
             bookingRepository.deleteById(bookingToDelete.getId());
+            emailService.sendMessage(bookingToDelete.getUser().getEmail(), "Booking Deleted/Rejected", "Hello, this is a confirmation email to notify you that your booking request for the " + bookingToDelete.getDate() + " has been deleted/rejected.");
             return new ResponseEntity<>(Optional.of(bookingToDelete), HttpStatus.OK);
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
 

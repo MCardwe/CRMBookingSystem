@@ -25,7 +25,10 @@ function AllBookings({ currentUser, handleBookingToEdit }) {
             getBookings()
             .then(data => {
                 if (data){
-                    setAllBookings(data.sort(orderByDate))
+                    const filteredBookings = data.filter((booking) => {
+                        return booking.setupType != 'N/A';
+                    })
+                    setAllBookings(filteredBookings.sort(orderByDate))
                     setIsLoading(false);
                 } else {
                     setIsLoading(false);

@@ -1,5 +1,6 @@
 package com.thistimemindfully.crmBookingSystem.controllers;
 
+import com.thistimemindfully.crmBookingSystem.esender.EmailService;
 import com.thistimemindfully.crmBookingSystem.models.Booking;
 import com.thistimemindfully.crmBookingSystem.models.User;
 import com.thistimemindfully.crmBookingSystem.repositories.UserRepository;
@@ -19,6 +20,8 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EmailService emailService;
     //Creating the custom routes
 
     @GetMapping(value = "/users")
@@ -48,6 +51,7 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user){
         userRepository.save(user);
         User newUser = userRepository.findUserByEmail(user.getEmail()).get(0);
+        emailService.sendMessage("maximillian.cardwell@gmail.com", "New user request ", user.getEmail() + " has sent a new user request, please confirm or deny from the booking system.");
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
@@ -69,6 +73,7 @@ public class UserController {
         return userRepository.findById(id).map(userToApprove -> {
             userToApprove.setAllowedToBook(true);
             userRepository.save(userToApprove);
+            emailService.sendMessage(userToApprove.getEmail(), "User Request Confirmed", "Hey! Your booking service account with ThisTimeMindfully has been approved. Thank you for your patience!");
             return new ResponseEntity<>(Optional.of(userToApprove), HttpStatus.OK);
         }).orElse(new ResponseEntity<>(Optional.empty(), HttpStatus.NOT_FOUND));
     }

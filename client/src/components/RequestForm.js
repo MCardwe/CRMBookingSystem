@@ -171,6 +171,7 @@ function RequestForm({ user }) {
                         <option value="Group space open floor">Group space open floor</option>
                         <option value="Group space table and chairs">Group space table and chairs</option>
                         <option value="One to one therapy space">One to one therapy space</option>
+                        {user.admin ? <option value="N/A">N/A</option> : null}
                     </Form.Select>
                 </Form.Group>
 

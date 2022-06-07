@@ -21,7 +21,10 @@ function PendingBookings({ user }) {
             getAllPendingBookings().then(data => {
                 
                 if (data) {
-                    setPendingBookings(data.sort(orderByDate));
+                    const filteredBookings = data.filter((booking) => {
+                        return booking.setupType != 'N/A';
+                    })
+                    setPendingBookings(filteredBookings.sort(orderByDate));
                     setIsLoading(false);
                 } else {
                     setIsLoading(false);
