@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { BsFillHouseDoorFill } from 'react-icons/bs';
+import { AiFillBook, AiOutlineForm } from 'react-icons/ai';
+
 
 export const SidebarData = [
     {
@@ -12,13 +14,13 @@ export const SidebarData = [
     {
         title: 'My Bookings',
         path: '/my_bookings',
-        icon: <BsFillHouseDoorFill />,
+        icon: <AiFillBook />,
         cName: 'nav-text'
     },
     {
         title: 'New Request',
         path: '/request_form',
-        icon: <BsFillHouseDoorFill />,
+        icon: <AiOutlineForm />,
         cName: 'nav-text'
     }
 ]

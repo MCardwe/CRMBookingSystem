@@ -16,6 +16,11 @@
     margin-right: .25rem;
 }
 
-.booking-list-container {
-    background-color: #B8B8B8;
+
+img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
 }

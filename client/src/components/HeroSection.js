@@ -14,6 +14,7 @@ const HeroSection = ({currentUser}) => {
     <>
     <div className='hero-section'>
     
+    <img src={require('../static/shutterstock_1935942262.jpg')} />
       <p className='main-page-title'>
         Booking made simple.
       </p>

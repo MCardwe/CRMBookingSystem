@@ -84,8 +84,12 @@ function PendingUsers() {
             Users To Approve or Deny Access
         </h2>
         <hr></hr>
-        <br></br>
+        
         <div className='booking-list-container'>
+
+        <img src={require('../static/image_31.png')} />
+
+
             {isLoading ? <div className='pulse-loader'>
                                 <PulseLoader
                                 css={override}
