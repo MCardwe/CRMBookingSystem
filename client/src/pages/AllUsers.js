@@ -76,7 +76,7 @@ function AllUsers({ currentUser }) {
     }
 
     const userNodes = allUsers.map((user, index) => {
-        return <AllUsersListItem key={index} user={user} />
+        return <AllUsersListItem key={index} user={user} fetchAllUsers={fetchAllUsers}/>
     })
 
   return (
